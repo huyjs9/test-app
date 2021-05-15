@@ -22,7 +22,7 @@ export default class Post extends React.Component {
             id: 1,
             auth: null
         })
-            .then(res => this.setState({auth: res.dâta}));
+            .then(res => this.setState({auth: res.data}));
     };
 
     render() {
@@ -31,7 +31,7 @@ export default class Post extends React.Component {
             <div className="card text-center m-3">
                 <h5 className="card-header">Authentication</h5>
                 <div className="card-body">
-                    Returned Authentication: {auth.result}
+                    Returned Authentication: {JSON.stringify(auth)}
                 </div>
             </div>
         );
