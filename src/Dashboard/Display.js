@@ -39,6 +39,8 @@ export default function Display() {
 	const [ipUrl, setIpUrl] = useState("");
 	const [publicValue, setPublicValue] = useState(null);
 	const [Pushit, setPushit] = useState(true);
+	const [host, setHost] = useState();
+
 	const handlePush = () => {
 		setPushit(!Pushit);
 		console.log(Pushit);
@@ -55,8 +57,15 @@ export default function Display() {
 						<Grid item xs={12} md={4} lg={3}>
 							<Paper className={fixedHeightPaper}>
 								<TextField ipUrl={ipUrl} setIpUrl={setIpUrl} />
-								<Select value={publicValue} setValue={setPublicValue}/>
-								<Button setPushit={handlePush} ipUrl={ipUrl}/>
+								<Select
+									value={publicValue}
+									setValue={setPublicValue}
+								/>
+								<Button
+									setPushit={handlePush}
+									ipUrl={ipUrl}
+									setHost={setHost}
+								/>
 							</Paper>
 						</Grid>
 						{/* Display */}
@@ -71,7 +80,7 @@ export default function Display() {
 									{" "}
 									Device Information
 								</Typography>
-								{Pushit === false && <Deposits />}
+								{Pushit === false && <Deposits host={host} />}
 							</Paper>
 						</Grid>
 						{/* Devices */}
