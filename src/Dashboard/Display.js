@@ -36,6 +36,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Display() {
 	const classes = useStyles();
+	const [ipUrl, setIpUrl] = useState("");
+	const [publicValue, setPublicValue] = useState(null);
 	const [Pushit, setPushit] = useState(true);
 	const handlePush = () => {
 		setPushit(!Pushit);
@@ -52,9 +54,9 @@ export default function Display() {
 						{/* Get Information */}
 						<Grid item xs={12} md={4} lg={3}>
 							<Paper className={fixedHeightPaper}>
-								<TextField></TextField>
-								<Select></Select>
-								<Button data={handlePush}></Button>
+								<TextField ipUrl={ipUrl} setIpUrl={setIpUrl} />
+								<Select value={publicValue} setValue={setPublicValue}/>
+								<Button setPushit={handlePush} ipUrl={ipUrl}/>
 							</Paper>
 						</Grid>
 						{/* Display */}
