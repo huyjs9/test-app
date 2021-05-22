@@ -180,7 +180,7 @@ const ValidatedRegisterForm = () => {
 										Already have an account?{" "}
 										<Link
 											// component={RouterLink}
-											to="/login"
+											to="/"
 											variant="body6"
 										>
 											Sign in
