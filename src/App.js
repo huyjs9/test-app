@@ -8,9 +8,11 @@ import Button from "./Dashboard/Button";
 import Deposits from "./Dashboard/Deposits";
 import Login from "./Page/Login";
 import Register from "./Page/Register";
+import Account from "./Page/Account";
 import MainListItems from "./Dashboard/MainListItems";
 import { Drawer, Divider, List } from "@material-ui/core";
 import { Router, Link } from "@reach/router";
+import Display from "./Dashboard/Display";
 
 function App() {
 	let data = localStorage.getItem("urlhost");
@@ -23,12 +25,10 @@ function App() {
 
 	return (
 		<div>
+			<Dashboard></Dashboard>
+			<Display></Display>
 			<p className="App">
-				<MainListItems></MainListItems>
-				<Router>
-					<Deposits path="/" />
-					<Login path="graph" />
-				</Router>
+				<Account></Account>
 				{/* <TextField></TextField>
 				<Button data={handleDisplay} ip={aa}></Button>
 				<Deposits></Deposits> */}

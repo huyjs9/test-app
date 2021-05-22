@@ -28,6 +28,9 @@ import Select from "./Select";
 import Button from "./Button";
 import Post from "../PostHook";
 import Login from "../Page/Login";
+import Register from "../Page/Register";
+import Display from "./Display";
+import { Router } from "@reach/router";
 
 const drawerWidth = 240;
 
@@ -204,6 +207,32 @@ export default function Dashboard() {
 					<MainListItems />
 				</List>
 			</Drawer>
+			<main className={classes.content}>
+				<div className={classes.appBarSpacer} />
+				<Container maxWidth="lg" className={classes.container}>
+					<Grid
+						container
+						spacing={10}
+						style={{
+							display: "flex",
+							justifyContent: "center",
+							marginTop: 10,
+						}}
+					>
+						{/* Chart */}
+						{/* <Grid item xs={12} md={8} lg={9}>
+              <Paper className={fixedHeightPaper}>
+                <div>hello</div>
+              </Paper>
+            </Grid> */}
+						<Router>
+							<Display path="/" />
+							<Login path="login" />
+							<Register path="register" />
+						</Router>
+					</Grid>
+				</Container>
+			</main>
 		</div>
 	);
 }

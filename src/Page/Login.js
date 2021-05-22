@@ -5,7 +5,6 @@ import {
 	Box,
 	Button,
 	Container,
-	Link,
 	TextField,
 	Typography,
 	Grid,
@@ -13,6 +12,7 @@ import {
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "@reach/router";
 
 const useStyles = makeStyles((theme) => ({
 	paper: {

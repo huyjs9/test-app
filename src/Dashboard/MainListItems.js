@@ -1,9 +1,10 @@
 import React from "react";
 import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import SettingsIcon from "@material-ui/icons/Settings";
 import PeopleIcon from "@material-ui/icons/People";
 import TimelineIcon from "@material-ui/icons/Timeline";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import { makeStyles } from "@material-ui/core/styles";
 import { Router, Link } from "@reach/router";
 import Button from "@material-ui/core/Button";
@@ -20,7 +21,7 @@ export default function MainListItems() {
 
 	return (
 		<div className={classes.root}>
-			<Link to="/" style={{textDecoration: 'none', color: '#000'}}>
+			<Link to="/" style={{ textDecoration: "none", color: "#000" }}>
 				<ListItem button component="nav">
 					<ListItemIcon>
 						<DashboardIcon />
@@ -28,29 +29,44 @@ export default function MainListItems() {
 					<ListItemText primary="Dashboard" />
 				</ListItem>
 			</Link>
-			<Link to="graph" style={{textDecoration: 'none', color: '#000'}}>
-				<ListItem button component="nav" to="graph">
+			<Link to="graph" style={{ textDecoration: "none", color: "#000" }}>
+				<ListItem button component="nav">
 					<ListItemIcon>
-						<Link to="graph">
-							<TimelineIcon />
-						</Link>
+						<TimelineIcon />
 					</ListItemIcon>
 					<ListItemText primary="Graph" />
-					<Link to="graph"></Link>
 				</ListItem>
 			</Link>
-			<ListItem button component="nav">
-				<ListItemIcon>
-					<SettingsIcon />
-				</ListItemIcon>
-				<ListItemText primary="Setting" />
-			</ListItem>
-			<ListItem button component="nav">
-				<ListItemIcon>
-					<PeopleIcon />
-				</ListItemIcon>
-				<ListItemText primary="Account" />
-			</ListItem>
+			<Link
+				to="account"
+				style={{ textDecoration: "none", color: "#000" }}
+			>
+				<ListItem button component="nav">
+					<ListItemIcon>
+						<PeopleIcon />
+					</ListItemIcon>
+					<ListItemText primary="Account" />
+				</ListItem>
+			</Link>
+			<Link to="login" style={{ textDecoration: "none", color: "#000" }}>
+				<ListItem button component="nav">
+					<ListItemIcon>
+						<LockOpenIcon />
+					</ListItemIcon>
+					<ListItemText primary="Login" />
+				</ListItem>
+			</Link>
+			<Link
+				to="register"
+				style={{ textDecoration: "none", color: "#000" }}
+			>
+				<ListItem button component="nav">
+					<ListItemIcon>
+						<PersonAddIcon />
+					</ListItemIcon>
+					<ListItemText primary="Register" />
+				</ListItem>
+			</Link>
 		</div>
 	);
 }
