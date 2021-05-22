@@ -20,7 +20,7 @@ export default function MainListItems() {
 
 	return (
 		<div className={classes.root}>
-			<Link to="/">
+			<Link to="/" style={{textDecoration: 'none', color: '#000'}}>
 				<ListItem button component="nav">
 					<ListItemIcon>
 						<DashboardIcon />
@@ -28,7 +28,7 @@ export default function MainListItems() {
 					<ListItemText primary="Dashboard" />
 				</ListItem>
 			</Link>
-			<Link to="graph">
+			<Link to="graph" style={{textDecoration: 'none', color: '#000'}}>
 				<ListItem button component="nav" to="graph">
 					<ListItemIcon>
 						<Link to="graph">
