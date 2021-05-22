@@ -18,11 +18,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SimpleSelect(props) {
   const classes = useStyles();
-  const [a, setValue] = React.useState('');
+  // const [a, setValue] = React.useState('');
+  const {value, setValue} = props;
 
   const handleChange = (event) => {
     setValue(event.target.value);
-    props.changed(event.target.value);
+    // props.changed(event.target.value);
   };
 
   return (
@@ -32,7 +33,7 @@ export default function SimpleSelect(props) {
         <Select
           labelId="demo-simple-select-outlined-label"
           id="demo-simple-select-outlined"
-          value={a}
+          value={value}
           onChange={handleChange}
           label="Read Community"
         >
@@ -42,7 +43,6 @@ export default function SimpleSelect(props) {
           <MenuItem value={1}>Public</MenuItem>
           <MenuItem value={0}>Private</MenuItem>
         </Select>
-        {console.log(a)}
       </FormControl>
     </div>
   );
