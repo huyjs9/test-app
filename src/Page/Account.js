@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		flexDirection: "column",
 		alignItems: "center",
+		padding: theme.spacing(2),
 	},
 	avatar: {
 		margin: theme.spacing(1),
@@ -74,7 +75,6 @@ const SettingsPassword = (props) => {
 						variant="outlined"
 					/>
 				</CardContent>
-				<Divider />
 				<Box
 					sx={{
 						display: "flex",

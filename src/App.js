@@ -12,7 +12,6 @@ import Account from "./Page/Account";
 import MainListItems from "./Dashboard/MainListItems";
 import { Drawer, Divider, List } from "@material-ui/core";
 import { Router, Link } from "@reach/router";
-import Display from "./Dashboard/Display";
 
 function App() {
 	let data = localStorage.getItem("urlhost");
@@ -26,7 +25,6 @@ function App() {
 	return (
 		<div>
 			<Dashboard></Dashboard>
-			<Display></Display>
 			<p className="App">
 				<Account></Account>
 				{/* <TextField></TextField>

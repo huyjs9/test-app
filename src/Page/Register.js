@@ -9,6 +9,7 @@ import {
 	Typography,
 	Grid,
 	Avatar,
+	Card,
 } from "@material-ui/core";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import { makeStyles } from "@material-ui/core/styles";
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		flexDirection: "column",
 		alignItems: "center",
+		padding: theme.spacing(2),
 	},
 	avatar: {
 		margin: theme.spacing(1),
@@ -74,7 +76,7 @@ const ValidatedRegisterForm = () => {
 					handleBlur,
 					handleSubmit,
 				}) => (
-					<div className={classes.paper}>
+					<Card className={classes.paper}>
 						<Avatar className={classes.avatar}>
 							<PersonAddOutlinedIcon />
 						</Avatar>
@@ -187,7 +189,7 @@ const ValidatedRegisterForm = () => {
 								</Grid>
 							</Grid>
 						</form>
-					</div>
+					</Card>
 				)}
 			</Formik>
 		</Container>

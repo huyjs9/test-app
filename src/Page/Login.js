@@ -9,6 +9,7 @@ import {
 	Typography,
 	Grid,
 	Avatar,
+	Card,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		flexDirection: "column",
 		alignItems: "center",
+		padding: theme.spacing(2),
 	},
 	avatar: {
 		margin: theme.spacing(1),
@@ -74,7 +76,7 @@ const ValidatedLoginForm = () => {
 					handleBlur,
 					handleSubmit,
 				}) => (
-					<div className={classes.paper}>
+					<Card className={classes.paper}>
 						<Avatar className={classes.avatar}>
 							<LockOutlinedIcon />
 						</Avatar>
@@ -157,7 +159,7 @@ const ValidatedLoginForm = () => {
 								</Grid>
 							</Grid>
 						</form>
-					</div>
+					</Card>
 				)}
 			</Formik>
 		</Container>

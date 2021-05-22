@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Orders from "./Orders";
+import Table from "./Table";
 import TextField from "./TextField";
 import Select from "./Select";
 import Button from "./Button";
@@ -75,7 +75,7 @@ export default function Display() {
 						{/* Devices */}
 						<Grid item xs={12}>
 							<Paper className={classes.paper}>
-								<Orders />
+								<Table />
 							</Paper>
 						</Grid>
 					</Grid>

@@ -21,7 +21,10 @@ export default function MainListItems() {
 
 	return (
 		<div className={classes.root}>
-			<Link to="/" style={{ textDecoration: "none", color: "#000" }}>
+			<Link
+				to="dashboard"
+				style={{ textDecoration: "none", color: "#000" }}
+			>
 				<ListItem button component="nav">
 					<ListItemIcon>
 						<DashboardIcon />
@@ -48,7 +51,7 @@ export default function MainListItems() {
 					<ListItemText primary="Account" />
 				</ListItem>
 			</Link>
-			<Link to="login" style={{ textDecoration: "none", color: "#000" }}>
+			<Link to="/" style={{ textDecoration: "none", color: "#000" }}>
 				<ListItem button component="nav">
 					<ListItemIcon>
 						<LockOpenIcon />
