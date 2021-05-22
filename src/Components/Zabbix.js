@@ -1,6 +1,6 @@
 import Request from './Request'
-import User from './Components/User'
-import Host from './Components/Host'
+import User from './User'
+import Host from './Host'
 
 
 /**
