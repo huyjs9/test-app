@@ -10,8 +10,8 @@ import {
 import Title from "./Title";
 
 // Generate Order Data
-function createData(index, des, type, phyadd, adstt, opstt, speed) {
-	return { index, des, type, phyadd, adstt, opstt, speed };
+function createData(index, des, stt, bitr, bits, speed) {
+	return { index, des, stt, bitr, bits, speed };
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -31,24 +31,8 @@ export default function Orders() {
 	// let af=JSON.stringify(data3.result[0].description);
 
 	const rows = [
-		createData(
-			1,
-			"a",
-			"eth(" + ")",
-			"0019.5B7D.0EAA",
-			"up(1)",
-			"up(1)",
-			10000
-		),
-		createData(
-			2,
-			"Discription",
-			"eth(0)",
-			"0019.5B7D.0EAA",
-			"up(1)",
-			"up",
-			10000
-		),
+		createData(1, "Interface f0/0", "up(1)", "1", "1", 10000),
+		createData(2, "Interface f1/0", "up(1)", "1", "1", 10000),
 	];
 	return (
 		<React.Fragment>
@@ -57,10 +41,9 @@ export default function Orders() {
 					<TableRow>
 						<TableCell>Index</TableCell>
 						<TableCell>Description</TableCell>
-						<TableCell>Type</TableCell>
-						<TableCell>PhysicalAddress</TableCell>
-						<TableCell>AdminStatus</TableCell>
-						<TableCell>OperationStatus</TableCell>
+						<TableCell>Status</TableCell>
+						<TableCell>Bits Recieved</TableCell>
+						<TableCell>Bits Sent</TableCell>
 						<TableCell align="right">Speed</TableCell>
 					</TableRow>
 				</TableHead>
@@ -69,10 +52,9 @@ export default function Orders() {
 						<TableRow key={row.id}>
 							<TableCell>{row.index}</TableCell>
 							<TableCell>{row.des}</TableCell>
-							<TableCell>{row.type}</TableCell>
-							<TableCell>{row.phyadd}</TableCell>
-							<TableCell>{row.adstt}</TableCell>
-							<TableCell>{row.opstt}</TableCell>
+							<TableCell>{row.stt}</TableCell>
+							<TableCell>{row.bitr}</TableCell>
+							<TableCell>{row.bits}</TableCell>
 							<TableCell align="right">{row.speed}</TableCell>
 						</TableRow>
 					))}

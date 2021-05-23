@@ -13,7 +13,8 @@ import {
 } from "@material-ui/core";
 import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "@reach/router";
+import { Link, useNavigate } from "@reach/router";
+import firebase from "../firebase";
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -39,6 +40,8 @@ const useStyles = makeStyles((theme) => ({
 
 const ValidatedRegisterForm = () => {
 	const classes = useStyles();
+	const navigate = useNavigate();
+
 	return (
 		<Container component="main" maxWidth="xs">
 			<Formik
@@ -63,8 +66,14 @@ const ValidatedRegisterForm = () => {
 						)
 						.required("Confirm Password is required."),
 				})}
-				onSubmit={(fields) => {
-					alert("SUCCESS!!");
+				onSubmit={(values, { setSubmitting }) => {
+					const { email, password } = values;
+					firebase.register(email, password);
+					navigate("/", { replace: true });
+					setTimeout(() => {
+						alert("Register success! Sign in now!", values);
+						setSubmitting(false);
+					}, 500);
 				}}
 			>
 				{({

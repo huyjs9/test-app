@@ -12,25 +12,23 @@ import Account from "./Page/Account";
 import MainListItems from "./Dashboard/MainListItems";
 import { Drawer, Divider, List } from "@material-ui/core";
 import { Router, Link } from "@reach/router";
+import Display from "./Dashboard/Display";
 
 function App() {
-	let data = localStorage.getItem("urlhost");
 	const [display, setDisplay] = useState(true);
 	const [value, setValue] = useState();
 	const handleDisplay = () => {
 		setDisplay(!display);
 	};
-	const aa = JSON.stringify(localStorage.getItem("urlhost"));
 
 	return (
 		<div>
 			<Dashboard></Dashboard>
 			<p className="App">
-				<Account></Account>
 				{/* <TextField></TextField>
 				<Button data={handleDisplay} ip={aa}></Button>
 				<Deposits></Deposits> */}
-				{display === false && <p className="App">url: {data}</p>}
+				{/* {display === false && <p className="App">url: {data}</p>} */}
 				IP: {localIpUrl("public", "ipv4")}
 			</p>
 		</div>

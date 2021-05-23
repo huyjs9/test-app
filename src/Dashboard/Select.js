@@ -19,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
 export default function SimpleSelect(props) {
 	const classes = useStyles();
 	// const [a, setValue] = React.useState('');
-	const { value, setValue } = props;
+	const { value, setValue, host } = props;
+	const fakeData1 = host;
 
 	const handleChange = (event) => {
 		setValue(event.target.value);
@@ -28,6 +29,27 @@ export default function SimpleSelect(props) {
 
 	return (
 		<div>
+			{/* {fakeData1.map((host) => (
+				<FormControl variant="outlined" className={classes.formControl}>
+					<InputLabel id="demo-simple-select-outlined-label">
+						Read Community
+					</InputLabel>
+					<Select
+						key={host.hostid}
+						labelId="demo-simple-select-outlined-label"
+						id="demo-simple-select-outlined"
+						value={value}
+						onChange={handleChange}
+						label="Read Community"
+					>
+						<MenuItem value="">
+							<em>None</em>
+						</MenuItem>
+						<MenuItem value={0}>{host.hostid}</MenuItem>
+					</Select>
+				</FormControl>
+			))} */}
+
 			<FormControl variant="outlined" className={classes.formControl}>
 				<InputLabel id="demo-simple-select-outlined-label">
 					Read Community

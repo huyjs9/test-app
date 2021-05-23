@@ -40,6 +40,7 @@ export default function Display() {
 	const [publicValue, setPublicValue] = useState(null);
 	const [Pushit, setPushit] = useState(true);
 	const [host, setHost] = useState([]);
+	const [itemdata, setItemdata] = useState([]);
 
 	const handlePush = () => {
 		setPushit(!Pushit);
@@ -65,6 +66,7 @@ export default function Display() {
 									setPushit={handlePush}
 									ipUrl={ipUrl}
 									setHost={setHost}
+									setItemdata={setItemdata}
 								/>
 							</Paper>
 						</Grid>
@@ -80,8 +82,10 @@ export default function Display() {
 									{" "}
 									Device Information
 								</Typography>
-								{/* Nho sua lai */ }
-								{/* {Pushit === false && <Deposits host={host} />} */}
+								{/* Nho sua lai */}
+								{Pushit === false && (
+									<Deposits host={host} itemdata={itemdata} />
+								)}
 								<Deposits host={host} />
 							</Paper>
 						</Grid>

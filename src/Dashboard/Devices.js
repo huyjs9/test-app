@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import { Link } from "@reach/router";
+import Post from "../PostHook";
 
 function preventDefault(event) {
 	event.preventDefault();

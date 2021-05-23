@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import * as EmailValidator from "email-validator";
 import {
@@ -13,7 +13,8 @@ import {
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "@reach/router";
+import { Link, useNavigate } from "@reach/router";
+import firebase from "../firebase";
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -37,8 +38,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const ValidatedLoginForm = () => {
+const ValidatedLoginForm = (props) => {
 	const classes = useStyles();
+	const navigate = useNavigate();
 
 	return (
 		<Container maxWidth="xs" component="main">
@@ -61,8 +63,12 @@ const ValidatedLoginForm = () => {
 					return errors;
 				}}
 				onSubmit={(values, { setSubmitting }) => {
+					const { email, password } = values;
+					// login(email, password);
+					firebase.login(email, password);
+					navigate("/dashboard", { replace: true });
 					setTimeout(() => {
-						alert("Logging in", values);
+						alert("Log in success!", values);
 						setSubmitting(false);
 					}, 500);
 				}}
@@ -164,6 +170,14 @@ const ValidatedLoginForm = () => {
 			</Formik>
 		</Container>
 	);
+	async function login() {
+		try {
+			await firebase.login();
+			props.history.push("dashboard");
+		} catch (error) {
+			alert(error.message);
+		}
+	}
 };
 
 export default ValidatedLoginForm;
