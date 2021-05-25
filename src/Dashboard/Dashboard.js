@@ -25,6 +25,8 @@ import Display from "./Display";
 import Account from "../Page/Account";
 import Chart from "./Chart";
 import { Router } from "@reach/router";
+import firebase from "../firebase";
+import { useNavigate } from "@reach/router";
 
 const drawerWidth = 240;
 
@@ -163,7 +165,7 @@ export default function Dashboard() {
 						fullWidth
 						variant="contained"
 						color="secondary"
-						// onClick={logout}
+						onClick={logout}
 						className={classes.submit}
 					>
 						<ListItem button>
@@ -244,4 +246,8 @@ export default function Dashboard() {
 			</main>
 		</div>
 	);
+	async function logout() {
+		await firebase.logout();
+
+	}
 }

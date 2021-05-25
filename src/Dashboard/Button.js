@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function IconLabelButtons(props) {
-	const { ipUrl, setPushit, setHost, setItemdata } = props;
+	const { ipUrl, hostid, setPushit, setHost, setItemdata } = props;
 
 	const handleClick = async () => {
 		try {
@@ -47,8 +47,11 @@ export default function IconLabelButtons(props) {
 				}
 			);
 			setHost(hostData.data.result);
-			console.log(hostData.data.result[0].hostid);
-			// localStorage.setItem("hostdata", JSON.stringify(hostData.data));
+			localStorage.setItem(
+				"hostdata",
+				JSON.stringify(hostData.data.result)
+			);
+
 			const itemData = await axios.post(
 				`http://${ipUrl}/zabbix/api_jsonrpc.php`,
 				{
@@ -61,7 +64,7 @@ export default function IconLabelButtons(props) {
 							"key_",
 							"description",
 							"lastvalue",
-							"unit",
+							"units",
 						],
 						hostids: "10084",
 						search: {
@@ -79,6 +82,7 @@ export default function IconLabelButtons(props) {
 			// );
 			setItemdata(itemData.data.result);
 			setPushit();
+			console.log(itemData.data.result);
 			// console.log(itemData.data.result);
 		} catch (error) {
 			console.error(error);

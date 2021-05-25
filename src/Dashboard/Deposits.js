@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import { Link } from "@reach/router";
+import { Box, Link } from "@material-ui/core";
+import { SettingsSystemDaydream } from "@material-ui/icons";
+// import { Link } from "@reach/router";
 
 function preventDefault(event) {
 	event.preventDefault();
@@ -21,16 +22,19 @@ const useStyles = makeStyles({
 
 export default function Deposits(props) {
 	const classes = useStyles();
-	const { host, itemdata, setHostid } = props;
+	const { host, hostid, setHostid } = props;
 	const fakeDataHost = host;
-	const fakeData = itemdata;
 	console.log(fakeDataHost);
 	// console.log(fakeData);
 	let data = JSON.parse(localStorage.getItem("token"));
-	// let data2 = JSON.parse(localStorage.getItem("hostdata"));
+	let data2 = JSON.parse(localStorage.getItem("hostdata"));
 	// let data3 = JSON.parse(localStorage.getItem("itemdata"));
 	// console.log(host);
 	// console.log(data3.result);
+	const handleClick = () => {
+		console.log(hostid);
+	};
+	console.log(JSON.stringify(hostid));
 
 	return (
 		<React.Fragment>
@@ -109,7 +113,13 @@ export default function Deposits(props) {
 								display="inline-block"
 								width="25%"
 							>
-								Hostid: {host.hostid}
+								<Link
+									onClick={() => {
+										alert(host);
+									}}
+								>
+									Hostid: {host.hostid}
+								</Link>
 							</Box>
 							<Box
 								fontWeight="fontWeightBold"

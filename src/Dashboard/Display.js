@@ -4,6 +4,7 @@ import TextField from "./TextField";
 import Select from "./Select";
 import Button from "./Button";
 import Deposits from "./Deposits";
+import Devices from "./Devices";
 import clsx from "clsx";
 import { Grid, Paper, Typography, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -28,7 +29,9 @@ const useStyles = makeStyles((theme) => ({
 		overflow: "auto",
 		flexDirection: "column",
 	},
-
+	fixedHeightDevices: {
+		height: 300,
+	},
 	fixedHeight: {
 		height: 240,
 	},
@@ -41,18 +44,21 @@ export default function Display() {
 	const [Pushit, setPushit] = useState(true);
 	const [host, setHost] = useState([]);
 	const [itemdata, setItemdata] = useState([]);
+	const [hostid, setHostid] = useState([]);
+	const [iid, setIid] = useState([]);
 
 	const handlePush = () => {
 		setPushit(!Pushit);
 		console.log(Pushit);
 	};
 	const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+	const fixedHeightBelow = clsx(classes.paper, classes.fixedHeightDevices);
 
 	return (
 		<div className={classes.root}>
 			<main className={classes.content}>
 				<div className={classes.appBarSpacer} />
-				<Container maxWidth="lg" className={classes.container}>
+				<Container maxWidth="100%" className={classes.container}>
 					<Grid container spacing={1}>
 						{/* Get Information */}
 						<Grid item xs={12} md={4} lg={3}>
@@ -61,6 +67,7 @@ export default function Display() {
 								<Select
 									value={publicValue}
 									setValue={setPublicValue}
+									host={host}
 								/>
 								<Button
 									setPushit={handlePush}
@@ -84,14 +91,28 @@ export default function Display() {
 								</Typography>
 								{/* Nho sua lai */}
 								{Pushit === false && (
-									<Deposits host={host} itemdata={itemdata} />
+									<Deposits
+										host={host}
+										hostid={hostid}
+										setHostid={setHostid}
+									/>
 								)}
-								<Deposits host={host} />
+							</Paper>
+						</Grid>
+						<Grid item xs={12}>
+							<Paper className={classes.paper}>
+								{Pushit === false && (
+									<Devices
+										itemdata={itemdata}
+										iid={iid}
+										setIid={setIid}
+									/>
+								)}
 							</Paper>
 						</Grid>
 						{/* Devices */}
 						<Grid item xs={12}>
-							<Paper className={classes.paper}>
+							<Paper className={fixedHeightBelow}>
 								<Table />
 							</Paper>
 						</Grid>
