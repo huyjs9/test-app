@@ -23,6 +23,7 @@ const useStyles = makeStyles({
 export default function Deposits(props) {
 	const classes = useStyles();
 	const { host, hostid, setHostid } = props;
+  const [currentHostIndex, setCurrentHostIndex] = useState(null);
 	const fakeDataHost = host;
 	console.log(fakeDataHost);
 	// console.log(fakeData);
@@ -105,7 +106,7 @@ export default function Deposits(props) {
 					Returned Authentication: {data}
 				</Box>
 				<Box>
-					{fakeDataHost.map((host) => (
+					{fakeDataHost.map((host, index) => (
 						<Box key={host.hostid} style={{ marginTop: 16 }}>
 							{" "}
 							<Box
@@ -115,7 +116,8 @@ export default function Deposits(props) {
 							>
 								<Link
 									onClick={() => {
-										alert(host);
+										alert(host[index].hostid);
+                    setCurrentHostIndex(index);
 									}}
 								>
 									Hostid: {host.hostid}
