@@ -44,7 +44,7 @@ export default function Display() {
 	const [Pushit, setPushit] = useState(true);
 	const [host, setHost] = useState([]);
 	const [itemdata, setItemdata] = useState([]);
-	const [hostid, setHostid] = useState([]);
+	const [currentHostIndex, setCurrentHostIndex] = useState(null);
 	const [iid, setIid] = useState([]);
 
 	const handlePush = () => {
@@ -72,6 +72,7 @@ export default function Display() {
 								<Button
 									setPushit={handlePush}
 									ipUrl={ipUrl}
+									currentHostIndex={currentHostIndex}
 									setHost={setHost}
 									setItemdata={setItemdata}
 								/>
@@ -93,8 +94,10 @@ export default function Display() {
 								{Pushit === false && (
 									<Deposits
 										host={host}
-										hostid={hostid}
-										setHostid={setHostid}
+										currentHostIndex={currentHostIndex}
+										setCurrentHostIndex={
+											setCurrentHostIndex
+										}
 									/>
 								)}
 							</Paper>
@@ -106,6 +109,8 @@ export default function Display() {
 										itemdata={itemdata}
 										iid={iid}
 										setIid={setIid}
+										ipUrl={ipUrl}
+										setItemdata={setItemdata}
 									/>
 								)}
 							</Paper>

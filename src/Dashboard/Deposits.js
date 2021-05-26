@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { Box, Link } from "@material-ui/core";
-import { SettingsSystemDaydream } from "@material-ui/icons";
+
 // import { Link } from "@reach/router";
 
 function preventDefault(event) {
@@ -22,20 +22,17 @@ const useStyles = makeStyles({
 
 export default function Deposits(props) {
 	const classes = useStyles();
-	const { host, hostid, setHostid } = props;
-  const [currentHostIndex, setCurrentHostIndex] = useState(null);
+	const { host, currentHostIndex, setCurrentHostIndex } = props;
+
 	const fakeDataHost = host;
 	console.log(fakeDataHost);
 	// console.log(fakeData);
 	let data = JSON.parse(localStorage.getItem("token"));
-	let data2 = JSON.parse(localStorage.getItem("hostdata"));
+	// let data2 = JSON.parse(localStorage.getItem("hostdata"));
 	// let data3 = JSON.parse(localStorage.getItem("itemdata"));
 	// console.log(host);
 	// console.log(data3.result);
-	const handleClick = () => {
-		console.log(hostid);
-	};
-	console.log(JSON.stringify(hostid));
+	console.log(JSON.stringify(currentHostIndex));
 
 	return (
 		<React.Fragment>
@@ -116,8 +113,8 @@ export default function Deposits(props) {
 							>
 								<Link
 									onClick={() => {
-										alert(host[index].hostid);
-                    setCurrentHostIndex(index);
+										alert(fakeDataHost[index].hostid);
+										setCurrentHostIndex(index);
 									}}
 								>
 									Hostid: {host.hostid}
@@ -132,27 +129,6 @@ export default function Deposits(props) {
 						</Box>
 					))}
 				</Box>
-
-				{/* <Box>
-					{fakeData.map((item) => (
-						<Box key={item.itemid} style={{ marginTop: 16 }}>
-							{" "}
-							<Box
-								fontWeight="fontWeightBold"
-								display="inline-block"
-								width="25%"
-							>
-								Hostid: {item.itemid}
-							</Box>
-							<Box
-								fontWeight="fontWeightBold"
-								display="inline-block"
-							>
-								Name: {item.name}
-							</Box>
-						</Box>
-					))}
-				</Box> */}
 			</Typography>
 		</React.Fragment>
 	);

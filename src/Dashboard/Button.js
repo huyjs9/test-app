@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function IconLabelButtons(props) {
-	const { ipUrl, hostid, setPushit, setHost, setItemdata } = props;
+	const { ipUrl, currentHostIndex, setPushit, setHost, setItemdata } = props;
 
 	const handleClick = async () => {
 		try {
@@ -49,7 +49,7 @@ export default function IconLabelButtons(props) {
 			setHost(hostData.data.result);
 			localStorage.setItem(
 				"hostdata",
-				JSON.stringify(hostData.data.result)
+				JSON.stringify(hostData.data.result[currentHostIndex].hostid1)
 			);
 
 			const itemData = await axios.post(
@@ -83,7 +83,6 @@ export default function IconLabelButtons(props) {
 			setItemdata(itemData.data.result);
 			setPushit();
 			console.log(itemData.data.result);
-			// console.log(itemData.data.result);
 		} catch (error) {
 			console.error(error);
 		}
