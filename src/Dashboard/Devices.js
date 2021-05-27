@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { Box, Link } from "@material-ui/core";
 import axios from "axios";
+import { number } from "yup";
 
 const useStyles = makeStyles({
 	depositContext: {
@@ -13,49 +15,87 @@ const useStyles = makeStyles({
 	},
 });
 
-export default function Deposits(props) {
+export default function Devices(props) {
 	const classes = useStyles();
-	const { itemdata, iid, setIid } = props;
-	const fakeData = itemdata;
-	console.log(iid);
+	const { itemdata, ipUrl, hostid, setItemdata } = props;
+	const fakeData = itemdata; //Nhận dữ liệu mảng Item đã lưu để mapping
 
+	useEffect(async () => {
+		console.log("hostid", JSON.stringify(hostid));
+		console.log("IP", ipUrl);
+		if (hostid) {
+			const itemData = await axios.post(
+				`http://${ipUrl}/zabbix/api_jsonrpc.php`,
+				{
+					jsonrpc: "2.0",
+					method: "item.get",
+					params: {
+						output: [
+							"itemid",
+							"name",
+							"description",
+							"lastvalue",
+							"units",
+						],
+						hostids: hostid,
+						search: {
+							name: "",
+						},
+						sortfield: "name",
+					},
+					auth: JSON.parse(localStorage.getItem("token")),
+					id: 1,
+				}
+			);
+			setItemdata(itemData.data.result); //Lưu dữ liệu mảng Item
+			console.log("123", itemData.data.result);
+		} else {
+			setItemdata([]);
+		}
+	}, [hostid]);
 	return (
 		<React.Fragment>
 			<Typography color="textPrimary" className={classes.depositContext}>
 				<Box>
-					{fakeData.map((item) => (
-						<Box key={item.itemid} style={{ marginTop: 16 }}>
-							{" "}
-							<Box
-								fontWeight="fontWeightBold"
-								display="inline-block"
-								width="25%"
-							>
-								<Link onClick={() => setIid(item.itemid)}>
-									Itemid: {item.itemid}
-								</Link>
+					{fakeData
+						.filter((item) => item.lastvalue >= 0)
+						.map((item) => (
+							<Box key={item.itemid} style={{ marginTop: 16 }}>
+								{" "}
+								<Box
+									fontWeight="fontWeightBold"
+									display="inline-block"
+									width="25%"
+								>
+									<Link
+										onClick={() => {
+											alert(item.itemid);
+										}}
+									>
+										Itemid: {item.itemid}
+									</Link>
+								</Box>
+								<Box
+									fontWeight="fontWeightLight"
+									display="inline-block"
+									width="50%"
+								>
+									Name: {item.name}
+								</Box>
+								<Box
+									fontWeight="fontWeightLight"
+									display="inline-block"
+								>
+									Lastvalue: {item.lastvalue}
+								</Box>
+								<Box
+									fontWeight="fontWeightLight"
+									display="inline-block"
+								>
+									{item.units}
+								</Box>
 							</Box>
-							<Box
-								fontWeight="fontWeightLight"
-								display="inline-block"
-								width="50%"
-							>
-								Name: {item.name}
-							</Box>
-							<Box
-								fontWeight="fontWeightLight"
-								display="inline-block"
-							>
-								Lastvalue: {item.lastvalue}
-							</Box>
-							<Box
-								fontWeight="fontWeightLight"
-								display="inline-block"
-							>
-								{item.units}
-							</Box>
-						</Box>
-					))}
+						))}
 				</Box>
 			</Typography>
 		</React.Fragment>

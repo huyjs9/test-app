@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { Box, Link } from "@material-ui/core";
-
+import axios from "axios";
 // import { Link } from "@reach/router";
 
 function preventDefault(event) {
@@ -22,9 +22,11 @@ const useStyles = makeStyles({
 
 export default function Deposits(props) {
 	const classes = useStyles();
-	const { host, currentHostIndex, setCurrentHostIndex } = props;
+	const { host, currentHostIndex, setCurrentHostIndex, hostid, setHostid } =
+		props;
 
-	const fakeDataHost = host;
+	const fakeDataHost = host; //Nhận dữ liệu mảng host đã lưu để mapping
+
 	console.log(fakeDataHost);
 	// console.log(fakeData);
 	let data = JSON.parse(localStorage.getItem("token"));
@@ -37,68 +39,6 @@ export default function Deposits(props) {
 	return (
 		<React.Fragment>
 			<Typography color="textPrimary" className={classes.depositContext}>
-				{/* <Box fontWeight="fontWeightMedium" className={classes.forHost}>
-					Returned Authentication: {data}
-				</Box>
-				<Box
-					fontWeight="fontWeightMedium"
-					width="25%"
-					display="inline-block"
-				>
-					"host": {data2.result[0].host}
-				</Box>
-				<Box fontWeight="fontWeightMedium" display="inline-block">
-					"hostid": {data2.result[0].hostid}
-				</Box>
-				<p></p>
-				<Box>
-					<Box fontWeight="fontWeightLight">
-						Divice: {data3.result[0].name}
-					</Box>
-					<Box fontWeight="fontWeightLight">
-						Description: {data3.result[0].description}
-					</Box>
-					<Box fontWeight="fontWeightLight">
-						Value: {data3.result[0].lastvalue}
-					</Box>
-				</Box>
-				<p></p>
-				<Box>
-					<Box fontWeight="fontWeightLight">
-						Divice: {data3.result[1].name}
-					</Box>
-					<Box fontWeight="fontWeightLight">
-						Description: {data3.result[1].description}
-					</Box>
-					<Box fontWeight="fontWeightLight">
-						Value: {data3.result[1].lastvalue}
-					</Box>
-				</Box>
-				<p></p>
-				<Box>
-					<Box fontWeight="fontWeightLight">
-						Divice: {data3.result[2].name}
-					</Box>
-					<Box fontWeight="fontWeightLight">
-						Description: {data3.result[2].description}
-					</Box>
-					<Box fontWeight="fontWeightLight">
-						Value: {data3.result[2].lastvalue}
-					</Box>
-				</Box>
-				<p></p>
-				<Box>
-					<Box fontWeight="fontWeightLight">
-						Divice: {data3.result[3].name}
-					</Box>
-					<Box fontWeight="fontWeightLight">
-						Description: {data3.result[3].description}
-					</Box>
-					<Box fontWeight="fontWeightLight">
-						Value: {data3.result[3].lastvalue}
-					</Box>
-				</Box>
-				<p></p> */}
 				<Box fontWeight="fontWeightMedium" className={classes.forHost}>
 					Returned Authentication: {data}
 				</Box>
@@ -115,6 +55,7 @@ export default function Deposits(props) {
 									onClick={() => {
 										alert(fakeDataHost[index].hostid);
 										setCurrentHostIndex(index);
+										setHostid(host.hostid);
 									}}
 								>
 									Hostid: {host.hostid}

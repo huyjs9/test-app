@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
-import { SettingsInputAntennaTwoTone } from "@material-ui/icons";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 export default function FormPropsTextFields(props) {
 	const classes = useStyles();
 	const { ipUrl, setIpUrl } = props;
+	const { currentHostIndex, setPushit, setHost, setItemdata } = props;
 	// const [name, setName] = useState(``);
 
 	const handleChange = (event) => {
@@ -32,7 +33,7 @@ export default function FormPropsTextFields(props) {
 			className={classes.root}
 			noValidate
 			autoComplete="off"
-			onSubmit={handleSubmit}
+			// onSubmit={handleSubmit}
 		>
 			<div>
 				<TextField

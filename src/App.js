@@ -17,6 +17,7 @@ import { Router, Link } from "@reach/router";
 import { makeStyles } from "@material-ui/core/styles";
 import Display from "./Dashboard/Display";
 import { textAlign } from "@material-ui/system";
+import Graph from "./Dashboard/Graph";
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
