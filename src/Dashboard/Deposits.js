@@ -39,9 +39,9 @@ export default function Deposits(props) {
 	return (
 		<React.Fragment>
 			<Typography color="textPrimary" className={classes.depositContext}>
-				<Box fontWeight="fontWeightMedium" className={classes.forHost}>
+				{/* <Box fontWeight="fontWeightMedium" className={classes.forHost}>
 					Returned Authentication: {data}
-				</Box>
+				</Box> */}
 				<Box>
 					{fakeDataHost.map((host, index) => (
 						<Box key={host.hostid} style={{ marginTop: 16 }}>

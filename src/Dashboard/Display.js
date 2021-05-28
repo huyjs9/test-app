@@ -1,13 +1,23 @@
-import React, { useEffect, useState } from "react";
-import Table from "./Table";
-import TextField from "./TextField";
-import Select from "./Select";
+import {
+	Box,
+	Card,
+	CardContent,
+	CardHeader,
+	Container,
+	Grid,
+	Paper,
+	Typography,
+} from "@material-ui/core";
+import ImportExportIcon from "@material-ui/icons/ImportExport";
+import { makeStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
+import React, { useState } from "react";
 import Button from "./Button";
 import Deposits from "./Deposits";
 import Devices from "./Devices";
-import clsx from "clsx";
-import { Grid, Paper, Typography, Container } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import Interface from "./Interface";
+import TableDevice from "./TableDevice";
+import TextField from "./TextField";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -17,7 +27,19 @@ const useStyles = makeStyles((theme) => ({
 	content: {
 		flexGrow: 1,
 		height: "100vh",
-		overflow: "auto",
+	},
+	cardHeaderRoot: {
+		backgroundColor: theme.palette.warning.light,
+	},
+	cardHeaderRootDevice: {
+		backgroundColor: theme.palette.success.light,
+	},
+	cardHeaderRootItem: {
+		backgroundColor: theme.palette.error.light,
+	},
+
+	textColor: {
+		color: "primary",
 	},
 	container: {
 		paddingTop: theme.spacing(4),
@@ -26,14 +48,23 @@ const useStyles = makeStyles((theme) => ({
 	paper: {
 		padding: theme.spacing(2),
 		display: "flex",
-		overflow: "auto",
 		flexDirection: "column",
+	},
+	paperdevice: {
+		padding: theme.spacing(2),
+		display: "flex",
+		flexDirection: "column",
+		overflow: "auto",
 	},
 	fixedHeightDevices: {
 		height: 300,
+		padding: theme.spacing(2),
+		display: "flex",
+		overflow: "auto",
+		flexDirection: "column",
 	},
 	fixedHeight: {
-		height: 240,
+		height: 150,
 	},
 }));
 
@@ -47,6 +78,7 @@ export default function Display() {
 	const [currentHostIndex, setCurrentHostIndex] = useState(null); //Truyền cho Deposits để map id trong mảng của Host
 	const [hostid, setHostid] = useState(null); //State để lưu hostid
 	const [Pushit1, setPushit1] = useState(true); //Thay đổi việc nhấn nút Button
+
 	const handlePush = () => {
 		setPushit(!Pushit); //Truyền cho Button để thực hiện nhấn nút
 		console.log(Pushit);
@@ -57,7 +89,7 @@ export default function Display() {
 	};
 
 	const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-	const fixedHeightBelow = clsx(classes.paper, classes.fixedHeightDevices);
+	const fixedHeightBelow = clsx(classes.paperdevice, classes.fixedHeight);
 
 	return (
 		<div className={classes.root}>
@@ -67,65 +99,118 @@ export default function Display() {
 					<Grid container spacing={1}>
 						{/* Get Information */}
 						<Grid item xs={12} md={4} lg={3}>
-							<Paper className={fixedHeightPaper}>
-								<TextField ipUrl={ipUrl} setIpUrl={setIpUrl} />
-								<Select
-									value={publicValue}
-									setValue={setPublicValue}
-									host={host}
-								/>
-								<Button
-									setPushit={handlePush}
-									ipUrl={ipUrl}
-									currentHostIndex={currentHostIndex}
-									setHost={setHost}
-								/>
-							</Paper>
+							<Card>
+								<CardHeader
+									title={
+										<Typography component="h2">
+											<Box
+												fontSize="h6.fontSize"
+												fontStyle="oblique"
+												fontWeight="fontWeightBold"
+												letterSpacing={2}
+											>
+												Input Information
+											</Box>
+										</Typography>
+									}
+									classes={{ root: classes.cardHeaderRoot }}
+									// titleTypographyProps={{
+									// 	component: Box,
+									// 	variant: "h6",
+									// 	letterSpacing: ".0625rem",
+									// 	marginBottom: ".25rem!important",
+								></CardHeader>
+								<CardContent className={fixedHeightPaper}>
+									<TextField
+										ipUrl={ipUrl}
+										setIpUrl={setIpUrl}
+									/>
+									<Button
+										setPushit={handlePush}
+										ipUrl={ipUrl}
+										currentHostIndex={currentHostIndex}
+										setHost={setHost}
+									/>
+								</CardContent>
+							</Card>
 						</Grid>
 						{/* Display */}
 						<Grid item xs={12} md={4} lg={9}>
-							<Paper className={fixedHeightPaper}>
-								<Typography
-									component="h2"
-									variant="h6"
-									color="primary"
-									gutterBottom
-								>
-									{" "}
-									Device Information
-								</Typography>
-								{/* Nho sua lai */}
-								{Pushit === false && (
-									<Deposits
-										host={host}
-										hostid={hostid}
-										setHostid={setHostid}
-										ipUrl={ipUrl}
-										setCurrentHostIndex={
-											setCurrentHostIndex
-										}
-										currentHostIndex={currentHostIndex}
-										setItemdata={setItemdata}
-									/>
-								)}
-							</Paper>
+							<Card>
+								<CardHeader
+									title={
+										<Typography component="h2">
+											<Box
+												fontSize="h6.fontSize"
+												fontStyle="oblique"
+												fontWeight="fontWeightBold"
+												letterSpacing={2}
+											>
+												Device Information
+											</Box>
+										</Typography>
+									}
+									classes={{
+										root: classes.cardHeaderRootDevice,
+									}}
+								></CardHeader>
+								<CardContent className={fixedHeightBelow}>
+									{/* Nho sua lai */}
+									{Pushit === false && (
+										<Deposits
+											host={host}
+											hostid={hostid}
+											setHostid={setHostid}
+											ipUrl={ipUrl}
+											setCurrentHostIndex={
+												setCurrentHostIndex
+											}
+											currentHostIndex={currentHostIndex}
+											setItemdata={setItemdata}
+										/>
+									)}
+								</CardContent>
+							</Card>
 						</Grid>
 						<Grid item xs={12}>
-							<Paper className={classes.paper}>
-								{hostid && ipUrl && (
-									<Devices
-										itemdata={itemdata}
-										ipUrl={ipUrl}
-										hostid={hostid}
-										setItemdata={setItemdata}
-									/>
-								)}
-							</Paper>
+							<Card className={classes.fixedHeightDevices}>
+								{/* <CardHeader
+									title={
+										<Typography component="h2">
+											<Box
+												fontSize="h5.fontSize"
+												fontStyle="oblique"
+												fontFamily="Monospace"
+												fontWeight="fontWeightBold"
+											>
+												Item Get
+											</Box>
+										</Typography>
+									}
+									classes={{
+										root: classes.cardHeaderRootItem,
+									}}
+								></CardHeader> */}
+
+								<CardContent>
+									{hostid && ipUrl && (
+										<Devices
+											itemdata={itemdata}
+											ipUrl={ipUrl}
+											hostid={hostid}
+											setItemdata={setItemdata}
+										/>
+									)}
+								</CardContent>
+							</Card>
 						</Grid>
 						{/* Devices */}
 						<Grid item xs={12}>
-							<Paper className={fixedHeightBelow}>
-								<Table />
+							<Paper className={classes.fixedHeightDevices}>
+								{hostid && ipUrl && (
+									// <TableDevice itemdata={itemdata} />
+									<Interface itemdata={itemdata} />
+								)}
 							</Paper>
 						</Grid>
 					</Grid>

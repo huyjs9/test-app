@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function IconLabelButtons(props) {
-	const { ipUrl, currentHostIndex, setPushit, setHost, setItemdata } = props;
+	const { ipUrl, currentHostIndex, setPushit, setHost } = props;
 
 	const handleClick = async () => {
 		try {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
 	Table,
@@ -8,11 +8,12 @@ import {
 	TableRow,
 } from "@material-ui/core";
 import Title from "./Title";
+import { Update } from "@material-ui/icons";
 
 // Generate Order Data
-function createData(index, des, stt, bitr, bits, speed) {
-	return { index, des, stt, bitr, bits, speed };
-}
+// function createData(index, des, stt, bitr, bits, speed) {
+// 	return { index, des, stt, bitr, bits, speed };
+// }
 
 const useStyles = makeStyles((theme) => ({
 	seeMore: {
@@ -20,8 +21,12 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function Orders() {
+export default function TableDevice(props) {
 	const classes = useStyles();
+	const { itemdata } = props;
+	const [currentindex, setCurrentindex] = useState(null);
+	const Data = itemdata;
+	console.log(Data);
 	let data3 = JSON.parse(localStorage.getItem("itemdata"));
 	// let aa=JSON.stringify(data3.result[0].description);
 	// let ab=JSON.stringify(data3.result[0].type);
@@ -30,10 +35,10 @@ export default function Orders() {
 	// let ae=JSON.stringify(data3.result[0].description);
 	// let af=JSON.stringify(data3.result[0].description);
 
-	const rows = [
-		createData(1, "Interface f0/0", "up(1)", "1", "1", 10000),
-		createData(2, "Interface f1/0", "up(1)", "1", "1", 10000),
-	];
+	// const rows = [
+	// 	createData(1, "Interface f0/0", "up(1)", "1", "1", 10000),
+	// 	createData(2, "Interface f1/0", "up(1)", "1", "1", 10000),
+	// ];
 	return (
 		<React.Fragment>
 			<Table size="small" className={classes.seeMore}>
@@ -42,22 +47,31 @@ export default function Orders() {
 						<TableCell>Index</TableCell>
 						<TableCell>Description</TableCell>
 						<TableCell>Status</TableCell>
-						<TableCell>Bits Recieved</TableCell>
-						<TableCell>Bits Sent</TableCell>
+						<TableCell>Bits Recieved (bps)</TableCell>
+						<TableCell>Bits Sent (bps)</TableCell>
 						<TableCell align="right">Speed</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{rows.map((row) => (
-						<TableRow key={row.id}>
-							<TableCell>{row.index}</TableCell>
-							<TableCell>{row.des}</TableCell>
-							<TableCell>{row.stt}</TableCell>
-							<TableCell>{row.bitr}</TableCell>
-							<TableCell>{row.bits}</TableCell>
-							<TableCell align="right">{row.speed}</TableCell>
-						</TableRow>
-					))}
+					{Data.filter((item) => item.name.includes("Interface")).map(
+						(item, index) => (
+							<TableRow key={item.itemid}>
+								<TableCell>{index + 1}</TableCell>
+								<TableCell>
+									{
+										item.name
+										// .replace(": Bits sent", "")
+										// .replace(": Bits received", "")}
+									}
+								</TableCell>
+								<TableCell></TableCell>
+								{/* <TableCell>{index + 1 && "up(1)"}</TableCell> */}
+								<TableCell>{item.lastvalue}</TableCell>
+								<TableCell>{item.lastvalue}</TableCell>
+								<TableCell align="right">10000</TableCell>
+							</TableRow>
+						)
+					)}
 				</TableBody>
 			</Table>
 			{/*<div className={classes.seeMore}>

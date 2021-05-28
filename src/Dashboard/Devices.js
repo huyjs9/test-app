@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { Box, Link } from "@material-ui/core";
 import axios from "axios";
-import { number } from "yup";
 
 const useStyles = makeStyles({
 	depositContext: {
@@ -59,21 +58,21 @@ export default function Devices(props) {
 				<Box>
 					{fakeData
 						.filter((item) => item.lastvalue >= 0)
-						.map((item) => (
+						.map((item, index) => (
 							<Box key={item.itemid} style={{ marginTop: 16 }}>
 								{" "}
 								<Box
 									fontWeight="fontWeightBold"
 									display="inline-block"
-									width="25%"
+									width="15%"
 								>
-									<Link
+									{/* <Link
 										onClick={() => {
 											alert(item.itemid);
 										}}
-									>
-										Itemid: {item.itemid}
-									</Link>
+									> */}
+									{index}
+									Itemid: {item.itemid}
 								</Box>
 								<Box
 									fontWeight="fontWeightLight"
