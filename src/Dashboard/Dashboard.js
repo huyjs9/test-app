@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
 	appBarSpacer: theme.mixins.toolbar,
 	content: {
 		flexGrow: 1,
-		height: "120vh",
+		// height: "120vh",
 		overflow: "auto",
 	},
 	container: {
@@ -197,7 +197,7 @@ export default function Dashboard() {
 				</List>
 			</Drawer>
 			<main className={classes.content}>
-				<div />
+			<div />
 				<Container maxWidth="lg" className={classes.container}>
 					<Grid
 						container
@@ -207,7 +207,7 @@ export default function Dashboard() {
 							justifyContent: "center",
 						}}
 					>
-						<Router>
+						<Router style={{width: '100%'}}>
 							<Display path="dashboard" />
 							<Chart path="graph" />
 						</Router>
