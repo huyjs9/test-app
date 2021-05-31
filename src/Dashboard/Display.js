@@ -16,7 +16,7 @@ import {
 	MDBCol,
 	MDBCardText,
 } from "mdbreact";
-
+import "../styles/cardsession.css";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import React, { useState } from "react";
@@ -28,10 +28,12 @@ import TableDevice from "./TableDevice";
 import TextField from "./TextField";
 import Alert from "./Alert";
 import CardSession from "./CardSession";
+import { maxHeight } from "@material-ui/system";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
 		display: "flex",
+		paddingTop: theme.spacing(1),
 	},
 	appBarSpacer: theme.mixins.toolbar,
 	content: {
@@ -58,6 +60,9 @@ const useStyles = makeStyles((theme) => ({
 	paper: {
 		padding: theme.spacing(2),
 		display: "flex",
+		overflow: "auto",
+		maxWidth: "100%",
+		maxHeight: "300px",
 		flexDirection: "column",
 	},
 	paperdevice: {
@@ -106,10 +111,38 @@ export default function Display() {
 			<main className={classes.content}>
 				<div className={classes.appBarSpacer} />
 				<Container maxWidth="lg" className={classes.container}>
-					<Grid container spacing={1}>
+					<Grid container spacing={2}>
 						{/* Get Information */}
-						<Grid item xs={12} md={4} lg={3}>
-							<Paper className={fixedHeightPaper}>
+						<Grid item xs={12} md={4} lg={4}>
+							<MDBCard
+								className="cascading-admin-card"
+								style={{ height: "230px" }}
+							>
+								<div className="admin-up">
+									<MDBIcon
+										icon="info"
+										className="primary-color"
+									/>
+									<div className="data">
+										<h5>
+											<strong>INPUT INFORMATION</strong>
+										</h5>
+									</div>
+								</div>
+								<MDBCardBody>
+									<TextField
+										ipUrl={ipUrl}
+										setIpUrl={setIpUrl}
+									/>
+									<Button
+										setPushit={handlePush}
+										ipUrl={ipUrl}
+										currentHostIndex={currentHostIndex}
+										setHost={setHost}
+									/>
+								</MDBCardBody>
+							</MDBCard>
+							{/* <Paper className={fixedHeightPaper}>
 								<TextField ipUrl={ipUrl} setIpUrl={setIpUrl} />
 
 								<Button
@@ -118,38 +151,67 @@ export default function Display() {
 									currentHostIndex={currentHostIndex}
 									setHost={setHost}
 								/>
-							</Paper>
+							</Paper> */}
 						</Grid>
 						{/* Display */}
-						<Grid item xs={12} md={4} lg={9}>
-							<Paper className={fixedHeightPaper}>
-								<Typography
-									component="h2"
-									variant="h6"
-									color="primary"
-									gutterBottom
-								>
-									{" "}
-									Device Information
-								</Typography>
-								{/* Nho sua lai */}
-								{Pushit === false && (
-									<Deposits
-										host={host}
-										hostid={hostid}
-										setHostid={setHostid}
-										ipUrl={ipUrl}
-										setCurrentHostIndex={
-											setCurrentHostIndex
-										}
-										currentHostIndex={currentHostIndex}
-										setItemdata={setItemdata}
+						<Grid item xs={12} md={4} lg={8}>
+							<MDBCard
+								className="cascading-admin-card"
+								style={{ height: "230px" }}
+							>
+								<div className="admin-up">
+									<MDBIcon
+										icon="database"
+										className="warning-color"
 									/>
-								)}
-							</Paper>
+									<div className="data">
+										<h5>
+											<strong>DEVICES INFORMATION</strong>
+										</h5>
+									</div>
+								</div>
+								<MDBCardBody>
+									{/* Nho sua lai */}
+									{Pushit === false && (
+										<Deposits
+											host={host}
+											hostid={hostid}
+											setHostid={setHostid}
+											ipUrl={ipUrl}
+											setCurrentHostIndex={
+												setCurrentHostIndex
+											}
+											currentHostIndex={currentHostIndex}
+											setItemdata={setItemdata}
+										/>
+									)}
+								</MDBCardBody>
+							</MDBCard>
 						</Grid>
 						<Grid item xs={12}>
-							<Paper className={classes.paper}>
+							<MDBCard
+								className="cascading-admin-card"
+								style={{ height: "320px", paddingTop: "10px" }}
+							>
+								<div className="admin-up">
+									<div className="data">
+										<h5>
+											<strong>ITEM LIST</strong>
+										</h5>
+									</div>
+								</div>
+								<MDBCardBody style={{ overflow: "auto" }}>
+									{hostid && ipUrl && (
+										<Devices
+											itemdata={itemdata}
+											ipUrl={ipUrl}
+											hostid={hostid}
+											setItemdata={setItemdata}
+										/>
+									)}
+								</MDBCardBody>
+							</MDBCard>
+							{/* <Paper className={classes.paper}>
 								{hostid && ipUrl && (
 									<Devices
 										itemdata={itemdata}
@@ -158,9 +220,26 @@ export default function Display() {
 										setItemdata={setItemdata}
 									/>
 								)}
-							</Paper>
+							</Paper> */}
 						</Grid>
 						{/* Devices */}
+						<Grid item xs={6}>
+							<Card>
+								<TableDevice itemdata={itemdata} />
+							</Card>
+						</Grid>
+						<Grid item xs={6}>
+							<Card>
+								<Card>
+									<Alert
+										alertdata={alertdata}
+										ipUrl={ipUrl}
+										hostid={hostid}
+										setAlertdata={setAlertdata}
+									/>
+								</Card>
+							</Card>
+						</Grid>
 					</Grid>
 				</Container>
 			</main>

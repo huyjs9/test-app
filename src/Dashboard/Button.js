@@ -7,6 +7,7 @@ import SearchIcon from "@material-ui/icons/Search";
 const useStyles = makeStyles((theme) => ({
 	button: {
 		margin: theme.spacing(2),
+		width: 250,
 	},
 }));
 

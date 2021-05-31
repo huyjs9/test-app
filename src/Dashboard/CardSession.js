@@ -7,11 +7,12 @@ import {
 	MDBCol,
 	MDBCardText,
 } from "mdbreact";
+import "../styles/cardsession.css";
 
 const AdminCardSection1 = () => {
 	return (
-		<MDBRow className="mb-4">
-			<MDBCol xl="3" md="6" className="mb-r">
+		<MDBRow className="mb-3">
+			<MDBCol lg={3} md="6" className="mb-r">
 				<MDBCard className="cascading-admin-card">
 					<div className="admin-up">
 						<MDBIcon icon="info" className="primary-color" />

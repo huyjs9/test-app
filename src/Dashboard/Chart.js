@@ -8,6 +8,7 @@ import {
 	Label,
 	ResponsiveContainer,
 } from "recharts";
+import { Paper } from "@material-ui/core";
 import Title from "./Title";
 
 // Generate Sales Data

@@ -15,7 +15,7 @@ import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link, useNavigate } from "@reach/router";
 import firebase from "../firebase";
-import { MarginTopButton } from '../styles/SignUp.styled'; 
+import { MarginTopButton } from "../styles/SignUp.styled";
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -114,10 +114,9 @@ const ValidatedRegisterForm = () => {
 								value={values.email}
 								variant="outlined"
 								className={
-									"form-control" +
-									(errors.email && touched.email
+									errors.email && touched.email
 										? " is-invalid"
-										: "")
+										: ""
 								}
 							/>
 
@@ -136,10 +135,9 @@ const ValidatedRegisterForm = () => {
 								value={values.password}
 								variant="outlined"
 								className={
-									"form-control" +
-									(errors.password && touched.password
+									errors.password && touched.password
 										? " is-invalid"
-										: "")
+										: ""
 								}
 							/>
 							<TextField
@@ -161,11 +159,10 @@ const ValidatedRegisterForm = () => {
 								value={values.confirmPassword}
 								variant="outlined"
 								className={
-									"form-control" +
-									(errors.confirmPassword &&
+									errors.confirmPassword &&
 									touched.confirmPassword
 										? " is-invalid"
-										: "")
+										: ""
 								}
 							/>
 							<Box sx={{ py: 2 }}>
