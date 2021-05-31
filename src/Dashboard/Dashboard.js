@@ -197,7 +197,7 @@ export default function Dashboard() {
 				</List>
 			</Drawer>
 			<main className={classes.content}>
-			<div />
+				<div />
 				<Container maxWidth="lg" className={classes.container}>
 					<Grid
 						container
@@ -207,7 +207,7 @@ export default function Dashboard() {
 							justifyContent: "center",
 						}}
 					>
-						<Router style={{width: '100%'}}>
+						<Router style={{ width: "100%" }}>
 							<Display path="dashboard" />
 							<Chart path="graph" />
 						</Router>
@@ -223,7 +223,7 @@ export default function Dashboard() {
 							justifyContent: "center",
 						}}
 					>
-						<Router>
+						<Router style={{ width: "100%" }}>
 							<Register path="register" />
 						</Router>
 					</Grid>

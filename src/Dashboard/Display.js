@@ -17,7 +17,6 @@ import {
 	MDBCardText,
 } from "mdbreact";
 
-import ImportExportIcon from "@material-ui/icons/ImportExport";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import React, { useState } from "react";
