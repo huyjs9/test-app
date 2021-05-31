@@ -1,8 +1,6 @@
-import React, { useState } from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Theaters } from "@material-ui/icons";
-import internalIp from "internal-ip";
+import React, { useState } from "react";
 
 const useStyles = makeStyles({
 	depositContext: {
@@ -16,7 +14,10 @@ export default function Interface(props) {
 
 	const Data = itemdata;
 	let interfacestt = Data.filter((number) =>
-		number.name.includes("Interface" && "Bits")
+		number.name.includes("Interface" && "Bits sent")
+	);
+	let interfacename = Data.filter((number) =>
+		number.name.includes("Interface" && "Bits received")
 	);
 	let operation = Data.filter((number1) =>
 		number1.name.includes("Operational")
@@ -25,24 +26,52 @@ export default function Interface(props) {
 	console.log("độ dài", a);
 	console.log("Interface", interfacestt);
 	console.log("Status", operation);
-	let array = [];
-	if (a > 0) {
-		array.push(interfacestt[0].name.replace(": Bits received", ""));
-	}
-	for (let i = 0; i < operation.length; i++) {
-		array.push(operation[i].lastvalue);
-	}
+	let arrayname = [];
+	let arraystt = [];
+    let array=[]
 	for (let i = 0; i < interfacestt.length; i++) {
-		array.push(interfacestt[i].lastvalue);
+		let arraybit = [];
+		arraybit.push(interfacename[i].name.replace(": Bits received", ""));
+		arraybit.push(operation[i].lastvalue);
+		arraybit.push(interfacename[i].lastvalue);
+		arraybit.push(interfacestt[i].lastvalue);
+		let obj = { ...arraybit };
+		arraystt.push(obj);
 	}
+
+	// for (let i = 0; i < interfacename.length; i++) {
+	// 	if (a > 0) {
+	// 		arrayname.push(
+	// 			interfacename[i].name.replace(": Bits received", "")
+	// 		);
+	// 	}
+	// }
+	// for (let i = 0; i < operation.length; i++) {
+	// 	arraystt.push(operation[i].lastvalue);
+	// }
+	// for (let i = 0; i < interfacestt.length; i++) {
+	// 	arraybit.push(interfacestt[i].lastvalue);
+	// }
 	console.log("mang", array);
 
 	return (
 		<React.Fragment>
 			<Typography color="textPrimary" className={classes.depositContext}>
-				<Box>Name:</Box>
-				<Box>Status: </Box>
-
+				<Box>
+					{arrayname.map((name) => (
+						<Box>Name:{name}</Box>
+					))}
+					{arraystt.map((stt) => (
+						<Box>Status: {(stt = 1 ? "up" : "down")}</Box>
+					))}
+					{/* 
+					{b.map((bit, index) => (
+						<Box>
+							<Box>Bit Received: {bit[0]}bps </Box>
+							<Box>Bit Sent: {bit[1]}bps</Box>
+						</Box>
+					))} */}
+				</Box>
 				{/* <Box>
 					{Data.filter((item) =>
 						item.name.includes("Interface" && "Bits")

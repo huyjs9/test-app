@@ -8,6 +8,15 @@ import {
 	Paper,
 	Typography,
 } from "@material-ui/core";
+import {
+	MDBCard,
+	MDBCardBody,
+	MDBIcon,
+	MDBRow,
+	MDBCol,
+	MDBCardText,
+} from "mdbreact";
+
 import ImportExportIcon from "@material-ui/icons/ImportExport";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
@@ -18,6 +27,8 @@ import Devices from "./Devices";
 import Interface from "./Interface";
 import TableDevice from "./TableDevice";
 import TextField from "./TextField";
+import Alert from "./Alert";
+import CardSession from "./CardSession";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -75,6 +86,7 @@ export default function Display() {
 	const [Pushit, setPushit] = useState(true); //Thay đổi việc nhấn nút Button
 	const [host, setHost] = useState([]); //Truyền cho Button để lưu dữ liệu Host
 	const [itemdata, setItemdata] = useState([]); //Truyền Button để lưu dữ liệu Item
+	const [alertdata, setAlertdata] = useState([]); //Truyền Alert để lưu dữ liệu Alert
 	const [currentHostIndex, setCurrentHostIndex] = useState(null); //Truyền cho Deposits để map id trong mảng của Host
 	const [hostid, setHostid] = useState(null); //State để lưu hostid
 	const [Pushit1, setPushit1] = useState(true); //Thay đổi việc nhấn nút Button
@@ -89,130 +101,67 @@ export default function Display() {
 	};
 
 	const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-	const fixedHeightBelow = clsx(classes.paperdevice, classes.fixedHeight);
 
 	return (
 		<div className={classes.root}>
 			<main className={classes.content}>
 				<div className={classes.appBarSpacer} />
-				<Container maxWidth="100%" className={classes.container}>
+				<Container maxWidth="lg" className={classes.container}>
 					<Grid container spacing={1}>
 						{/* Get Information */}
 						<Grid item xs={12} md={4} lg={3}>
-							<Card>
-								<CardHeader
-									title={
-										<Typography component="h2">
-											<Box
-												fontSize="h6.fontSize"
-												fontStyle="oblique"
-												fontWeight="fontWeightBold"
-												letterSpacing={2}
-											>
-												Input Information
-											</Box>
-										</Typography>
-									}
-									classes={{ root: classes.cardHeaderRoot }}
-									// titleTypographyProps={{
-									// 	component: Box,
-									// 	variant: "h6",
-									// 	letterSpacing: ".0625rem",
-									// 	marginBottom: ".25rem!important",
-								></CardHeader>
-								<CardContent className={fixedHeightPaper}>
-									<TextField
-										ipUrl={ipUrl}
-										setIpUrl={setIpUrl}
-									/>
-									<Button
-										setPushit={handlePush}
-										ipUrl={ipUrl}
-										currentHostIndex={currentHostIndex}
-										setHost={setHost}
-									/>
-								</CardContent>
-							</Card>
+							<Paper className={fixedHeightPaper}>
+								<TextField ipUrl={ipUrl} setIpUrl={setIpUrl} />
+
+								<Button
+									setPushit={handlePush}
+									ipUrl={ipUrl}
+									currentHostIndex={currentHostIndex}
+									setHost={setHost}
+								/>
+							</Paper>
 						</Grid>
 						{/* Display */}
 						<Grid item xs={12} md={4} lg={9}>
-							<Card>
-								<CardHeader
-									title={
-										<Typography component="h2">
-											<Box
-												fontSize="h6.fontSize"
-												fontStyle="oblique"
-												fontWeight="fontWeightBold"
-												letterSpacing={2}
-											>
-												Device Information
-											</Box>
-										</Typography>
-									}
-									classes={{
-										root: classes.cardHeaderRootDevice,
-									}}
-								></CardHeader>
-								<CardContent className={fixedHeightBelow}>
-									{/* Nho sua lai */}
-									{Pushit === false && (
-										<Deposits
-											host={host}
-											hostid={hostid}
-											setHostid={setHostid}
-											ipUrl={ipUrl}
-											setCurrentHostIndex={
-												setCurrentHostIndex
-											}
-											currentHostIndex={currentHostIndex}
-											setItemdata={setItemdata}
-										/>
-									)}
-								</CardContent>
-							</Card>
-						</Grid>
-						<Grid item xs={12}>
-							<Card className={classes.fixedHeightDevices}>
-								{/* <CardHeader
-									title={
-										<Typography component="h2">
-											<Box
-												fontSize="h5.fontSize"
-												fontStyle="oblique"
-												fontFamily="Monospace"
-												fontWeight="fontWeightBold"
-											>
-												Item Get
-											</Box>
-										</Typography>
-									}
-									classes={{
-										root: classes.cardHeaderRootItem,
-									}}
-								></CardHeader> */}
-
-								<CardContent>
-									{hostid && ipUrl && (
-										<Devices
-											itemdata={itemdata}
-											ipUrl={ipUrl}
-											hostid={hostid}
-											setItemdata={setItemdata}
-										/>
-									)}
-								</CardContent>
-							</Card>
-						</Grid>
-						{/* Devices */}
-						<Grid item xs={12}>
-							<Paper className={classes.fixedHeightDevices}>
-								{hostid && ipUrl && (
-									// <TableDevice itemdata={itemdata} />
-									<Interface itemdata={itemdata} />
+							<Paper className={fixedHeightPaper}>
+								<Typography
+									component="h2"
+									variant="h6"
+									color="primary"
+									gutterBottom
+								>
+									{" "}
+									Device Information
+								</Typography>
+								{/* Nho sua lai */}
+								{Pushit === false && (
+									<Deposits
+										host={host}
+										hostid={hostid}
+										setHostid={setHostid}
+										ipUrl={ipUrl}
+										setCurrentHostIndex={
+											setCurrentHostIndex
+										}
+										currentHostIndex={currentHostIndex}
+										setItemdata={setItemdata}
+									/>
 								)}
 							</Paper>
 						</Grid>
+						<Grid item xs={12}>
+							<Paper className={classes.paper}>
+								{hostid && ipUrl && (
+									<Devices
+										itemdata={itemdata}
+										ipUrl={ipUrl}
+										hostid={hostid}
+										setItemdata={setItemdata}
+									/>
+								)}
+							</Paper>
+						</Grid>
+						{/* Devices */}
 					</Grid>
 				</Container>
 			</main>

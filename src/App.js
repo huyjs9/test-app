@@ -46,6 +46,7 @@ function App() {
 	return firebaseInitialized !== false ? (
 		<div>
 			<Dashboard></Dashboard>
+			<Display></Display>
 			<p className="App">
 				{/* <TextField></TextField>
 				<Button data={handleDisplay} ip={aa}></Button>

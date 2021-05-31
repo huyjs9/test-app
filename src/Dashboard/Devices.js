@@ -3,6 +3,13 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { Box, Link } from "@material-ui/core";
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableRow,
+} from "@material-ui/core";
 import axios from "axios";
 
 const useStyles = makeStyles({
@@ -54,48 +61,65 @@ export default function Devices(props) {
 	}, [hostid]);
 	return (
 		<React.Fragment>
-			<Typography color="textPrimary" className={classes.depositContext}>
-				<Box>
+			<Table size="small" className={classes.seeMore}>
+				<TableHead>
+					<TableRow>
+						<TableCell>Item Index</TableCell>
+						<TableCell>Name</TableCell>
+						<TableCell align="right">Current</TableCell>
+					</TableRow>
+				</TableHead>
+				<TableBody>
 					{fakeData
 						.filter((item) => item.lastvalue >= 0)
 						.map((item, index) => (
-							<Box key={item.itemid} style={{ marginTop: 16 }}>
-								{" "}
-								<Box
-									fontWeight="fontWeightBold"
-									display="inline-block"
-									width="15%"
-								>
-									{/* <Link
-										onClick={() => {
-											alert(item.itemid);
-										}}
-									> */}
-									{index}
-									Itemid: {item.itemid}
-								</Box>
-								<Box
-									fontWeight="fontWeightLight"
-									display="inline-block"
-									width="50%"
-								>
-									Name: {item.name}
-								</Box>
-								<Box
-									fontWeight="fontWeightLight"
-									display="inline-block"
-								>
-									Lastvalue: {item.lastvalue}
-								</Box>
-								<Box
-									fontWeight="fontWeightLight"
-									display="inline-block"
-								>
+							<TableRow key={item.itemid}>
+								<TableCell>{item.itemid}</TableCell>
+								<TableCell>{item.name}</TableCell>
+								<TableCell align="right">
+									{item.lastvalue}
 									{item.units}
-								</Box>
-							</Box>
+								</TableCell>
+							</TableRow>
+							// <Box  key={item.itemid} style={{ marginTop: 16 }}>
+							// 	{" "}
+							// 	<Box
+							// 		fontWeight="fontWeightBold"
+							// 		display="inline-block"
+							// 		width="15%"
+							// 	>
+							// 		{/* <Link
+							// 			onClick={() => {
+							// 				alert(item.itemid);
+							// 			}}
+							// 		> */}
+							// 		Itemid: {item.itemid}
+							// 	</Box>
+							// 	<Box
+							// 		fontWeight="fontWeightLight"
+							// 		display="inline-block"
+							// 		width="50%"
+							// 	>
+							// 		Name: {item.name}
+							// 	</Box>
+							// 	<Box
+							// 		fontWeight="fontWeightLight"
+							// 		display="inline-block"
+							// 	>
+							// 		Lastvalue: {item.lastvalue}
+							// 	</Box>
+							// 	<Box
+							// 		fontWeight="fontWeightLight"
+							// 		display="inline-block"
+							// 	>
+							// 		{item.units}
+							// 	</Box>
+							// </Box>
 						))}
-				</Box>
+				</TableBody>
+			</Table>
+			<Typography color="textPrimary" className={classes.depositContext}>
+				<Box></Box>
 			</Typography>
 		</React.Fragment>
 	);

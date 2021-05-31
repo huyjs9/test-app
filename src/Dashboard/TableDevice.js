@@ -7,13 +7,6 @@ import {
 	TableHead,
 	TableRow,
 } from "@material-ui/core";
-import Title from "./Title";
-import { Update } from "@material-ui/icons";
-
-// Generate Order Data
-// function createData(index, des, stt, bitr, bits, speed) {
-// 	return { index, des, stt, bitr, bits, speed };
-// }
 
 const useStyles = makeStyles((theme) => ({
 	seeMore: {
@@ -26,19 +19,26 @@ export default function TableDevice(props) {
 	const { itemdata } = props;
 	const [currentindex, setCurrentindex] = useState(null);
 	const Data = itemdata;
-	console.log(Data);
-	let data3 = JSON.parse(localStorage.getItem("itemdata"));
-	// let aa=JSON.stringify(data3.result[0].description);
-	// let ab=JSON.stringify(data3.result[0].type);
-	// let ac=JSON.stringify(data3.result[0].description);
-	// let ad=JSON.stringify(data3.result[0].description);
-	// let ae=JSON.stringify(data3.result[0].description);
-	// let af=JSON.stringify(data3.result[0].description);
-
-	// const rows = [
-	// 	createData(1, "Interface f0/0", "up(1)", "1", "1", 10000),
-	// 	createData(2, "Interface f1/0", "up(1)", "1", "1", 10000),
-	// ];
+	let interfacebits = Data.filter((number) =>
+		number.name.includes("Interface" && "Bits sent")
+	);
+	let interfacebitr = Data.filter((number) =>
+		number.name.includes("Interface" && "Bits received")
+	);
+	let operation = Data.filter((number1) =>
+		number1.name.includes("Operational")
+	);
+	let array = [];
+	for (let i = 0; i < interfacebits.length; i++) {
+		let arraybit = [];
+		arraybit.push(interfacebitr[i].name.replace(": Bits received", ""));
+		arraybit.push(operation[i].lastvalue);
+		arraybit.push(interfacebitr[i].lastvalue);
+		arraybit.push(interfacebits[i].lastvalue);
+		let obj = { ...arraybit };
+		array.push(obj);
+	}
+	console.log("mang", array);
 	return (
 		<React.Fragment>
 			<Table size="small" className={classes.seeMore}>
@@ -49,29 +49,22 @@ export default function TableDevice(props) {
 						<TableCell>Status</TableCell>
 						<TableCell>Bits Recieved (bps)</TableCell>
 						<TableCell>Bits Sent (bps)</TableCell>
-						<TableCell align="right">Speed</TableCell>
+						<TableCell align="right">Speed (Mbps)</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{Data.filter((item) => item.name.includes("Interface")).map(
-						(item, index) => (
-							<TableRow key={item.itemid}>
-								<TableCell>{index + 1}</TableCell>
-								<TableCell>
-									{
-										item.name
-										// .replace(": Bits sent", "")
-										// .replace(": Bits received", "")}
-									}
-								</TableCell>
-								<TableCell></TableCell>
-								{/* <TableCell>{index + 1 && "up(1)"}</TableCell> */}
-								<TableCell>{item.lastvalue}</TableCell>
-								<TableCell>{item.lastvalue}</TableCell>
-								<TableCell align="right">10000</TableCell>
-							</TableRow>
-						)
-					)}
+					{array.map((item, index) => (
+						<TableRow key={index}>
+							<TableCell>{index + 1}</TableCell>
+							<TableCell>{item[0]}</TableCell>
+							<TableCell>
+								{(item[1] = 1 ? "up(1)" : "down(0)")}
+							</TableCell>
+							<TableCell>{item[2]}</TableCell>
+							<TableCell>{item[3]}</TableCell>
+							<TableCell align="right">1000</TableCell>
+						</TableRow>
+					))}
 				</TableBody>
 			</Table>
 			{/*<div className={classes.seeMore}>
