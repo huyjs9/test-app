@@ -15,6 +15,7 @@ import PersonAddOutlinedIcon from "@material-ui/icons/PersonAddOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link, useNavigate } from "@reach/router";
 import firebase from "../firebase";
+import { MarginTopButton } from '../styles/SignUp.styled'; 
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -168,7 +169,7 @@ const ValidatedRegisterForm = () => {
 								}
 							/>
 							<Box sx={{ py: 2 }}>
-								<Button
+								<MarginTopButton
 									color="primary"
 									disabled={isSubmitting}
 									fullWidth
@@ -178,9 +179,9 @@ const ValidatedRegisterForm = () => {
 									className={classes.submit}
 								>
 									Sign up
-								</Button>
+								</MarginTopButton>
 							</Box>
-							<Grid container justify="flex-end">
+							<Grid container justify="center">
 								<Grid item>
 									<Typography
 										color="textSecondary"
