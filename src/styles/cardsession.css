@@ -118,6 +118,14 @@
 	float: right;
 	margin-top: 2rem;
 	text-align: right;
+	display: inline-block;
+}
+
+.cascading-admin-card .admin-up .dataone {
+	float: left;
+	margin-top: 1.5rem;
+	align-content: left;
+	display: inline-block;
 }
 .admin-up .data p {
 	color: #999999;

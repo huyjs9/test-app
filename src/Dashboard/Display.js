@@ -7,7 +7,11 @@ import {
 	Grid,
 	Paper,
 	Typography,
+	IconButton,
+	Divider,
 } from "@material-ui/core";
+import RefreshIcon from "@material-ui/icons/Refresh";
+import deepPurple from "@material-ui/core/colors/deepPurple";
 import {
 	MDBCard,
 	MDBCardBody,
@@ -17,18 +21,16 @@ import {
 	MDBCardText,
 } from "mdbreact";
 import "../styles/cardsession.css";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import React, { useState } from "react";
 import Button from "./Button";
 import Deposits from "./Deposits";
 import Devices from "./Devices";
-import Interface from "./Interface";
 import TableDevice from "./TableDevice";
 import TextField from "./TextField";
 import Alert from "./Alert";
-import CardSession from "./CardSession";
-import { maxHeight } from "@material-ui/system";
+import Search from "./Search";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -81,8 +83,25 @@ const useStyles = makeStyles((theme) => ({
 	fixedHeight: {
 		height: 150,
 	},
+	divider: {
+		// Theme Color, or use css color in quote
+		background: theme.palette.text.primary,
+	},
 }));
-
+const StyledBox = withStyles({
+	root: {
+		background: "linear-gradient(45deg, #FE88A2 30%, #FFA475 90%)",
+		// borderRadius: 3,
+		border: 0,
+		color: "white",
+		// height: 48,
+		// padding: "0 30px",
+		boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+	},
+	label: {
+		textTransform: "capitalize",
+	},
+})(Box);
 export default function Display() {
 	const classes = useStyles();
 	const [ipUrl, setIpUrl] = useState(""); //ipUrl truyền cho TextFeild rồi truyền cho Button để post
@@ -94,18 +113,15 @@ export default function Display() {
 	const [currentHostIndex, setCurrentHostIndex] = useState(null); //Truyền cho Deposits để map id trong mảng của Host
 	const [hostid, setHostid] = useState(null); //State để lưu hostid
 	const [Pushit1, setPushit1] = useState(true); //Thay đổi việc nhấn nút Button
+	const [searched, setSearched] = useState(""); //Truyền cho Search để search table
+	const [rows, setRows] = useState(itemdata);
 
 	const handlePush = () => {
-		setPushit(!Pushit); //Truyền cho Button để thực hiện nhấn nút
+		setPushit(false); //Truyền cho Button để thực hiện nhấn nút
 		console.log(Pushit);
-	};
-	const handlePush1 = () => {
-		setPushit1(!Pushit1); //Truyền cho Button để thực hiện nhấn nút
-		console.log(Pushit1);
 	};
 
 	const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
 	return (
 		<div className={classes.root}>
 			<main className={classes.content}>
@@ -123,23 +139,45 @@ export default function Display() {
 										icon="info"
 										className="primary-color"
 									/>
-									<div className="data">
+									<div
+										className="data"
+										style={{ paddingTop: "10px" }}
+									>
 										<h5>
 											<strong>INPUT INFORMATION</strong>
 										</h5>
+										<Divider
+											variant="inset"
+											classes={{ root: classes.divider }}
+										/>
 									</div>
 								</div>
+
 								<MDBCardBody>
-									<TextField
-										ipUrl={ipUrl}
-										setIpUrl={setIpUrl}
-									/>
-									<Button
-										setPushit={handlePush}
-										ipUrl={ipUrl}
-										currentHostIndex={currentHostIndex}
-										setHost={setHost}
-									/>
+									<Box>
+										<Box
+											justifyContent="center"
+											display="flex"
+										>
+											<TextField
+												ipUrl={ipUrl}
+												setIpUrl={setIpUrl}
+											/>
+										</Box>
+										<Box
+											justifyContent="center"
+											display="flex"
+										>
+											<Button
+												setPushit={handlePush}
+												ipUrl={ipUrl}
+												currentHostIndex={
+													currentHostIndex
+												}
+												setHost={setHost}
+											/>
+										</Box>
+									</Box>
 								</MDBCardBody>
 							</MDBCard>
 							{/* <Paper className={fixedHeightPaper}>
@@ -164,15 +202,22 @@ export default function Display() {
 										icon="database"
 										className="warning-color"
 									/>
-									<div className="data">
+									<div
+										className="data"
+										style={{ paddingTop: "10px" }}
+									>
 										<h5>
 											<strong>DEVICES INFORMATION</strong>
 										</h5>
+										<Divider
+											variant="inset"
+											classes={{ root: classes.divider }}
+										/>
 									</div>
 								</div>
 								<MDBCardBody>
 									{/* Nho sua lai */}
-									{Pushit === false && (
+									{Pushit === false && ipUrl && (
 										<Deposits
 											host={host}
 											hostid={hostid}
@@ -191,24 +236,75 @@ export default function Display() {
 						<Grid item xs={12}>
 							<MDBCard
 								className="cascading-admin-card"
-								style={{ height: "320px", paddingTop: "10px" }}
+								style={{ height: "420px" }}
 							>
-								<div className="admin-up">
-									<div className="data">
-										<h5>
-											<strong>ITEM LIST</strong>
-										</h5>
+								<StyledBox bgcolor="text.secondary">
+									{" "}
+									<div className="admin-up">
+										<div className="data">
+											<Box>
+												<h5>
+													<strong
+														style={{
+															color: "white",
+														}}
+													>
+														ITEM LIST
+													</strong>
+												</h5>
+											</Box>
+										</div>
 									</div>
-								</div>
+								</StyledBox>
+								<StyledBox>
+									{" "}
+									<Box
+										style={{
+											paddingLeft: "20px",
+											paddingBottom: "10px",
+										}}
+										display="inline-block"
+									>
+										<Search
+											itemdata={itemdata}
+											searched={searched}
+											setSearched={setSearched}
+											setRows={setRows}
+										/>
+									</Box>
+									<Box display="inline-block">
+										<IconButton
+											aria-label="delete"
+											component="span"
+											// onClick={() => (
+											// 	<Devices
+											// 		itemdata={itemdata}
+											// 		ipUrl={ipUrl}
+											// 		hostid={hostid}
+											// 		setItemdata={setItemdata}
+											// 	/>
+											// )}
+										>
+											<RefreshIcon fontSize="large" />
+										</IconButton>
+									</Box>
+								</StyledBox>
+
 								<MDBCardBody style={{ overflow: "auto" }}>
-									{hostid && ipUrl && (
+									<Devices
+										itemdata={rows}
+										ipUrl={ipUrl}
+										hostid={hostid}
+										setItemdata={setItemdata}
+									/>
+									{/* {hostid && ipUrl && (
 										<Devices
 											itemdata={itemdata}
 											ipUrl={ipUrl}
 											hostid={hostid}
 											setItemdata={setItemdata}
 										/>
-									)}
+									)} */}
 								</MDBCardBody>
 							</MDBCard>
 							{/* <Paper className={classes.paper}>

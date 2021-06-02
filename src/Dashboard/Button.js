@@ -7,7 +7,7 @@ import SearchIcon from "@material-ui/icons/Search";
 const useStyles = makeStyles((theme) => ({
 	button: {
 		margin: theme.spacing(2),
-		width: 250,
+		width: "240px",
 	},
 }));
 
@@ -48,10 +48,11 @@ export default function IconLabelButtons(props) {
 				}
 			);
 			setHost(hostData.data.result); //Lưu dữ liệu mảng Host
-			localStorage.setItem(
-				"hostdata",
-				JSON.stringify(hostData.data.result)
-			);
+			console.log(hostData.data.result);
+			// localStorage.setItem(
+			// 	"hostdata",
+			// 	JSON.stringify(hostData.data.result)
+			// );
 
 			// const itemData = await axios.post(
 			// 	`http://${ipUrl}/zabbix/api_jsonrpc.php`,
