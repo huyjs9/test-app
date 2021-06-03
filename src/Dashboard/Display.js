@@ -215,7 +215,7 @@ export default function Display() {
 										/>
 									</div>
 								</div>
-								<MDBCardBody>
+								<MDBCardBody style={{ overflow: "auto" }}>
 									{/* Nho sua lai */}
 									{Pushit === false && ipUrl && (
 										<Deposits

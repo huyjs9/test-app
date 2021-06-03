@@ -97,7 +97,9 @@ export default function Devices(props) {
 						.filter((item) => item.lastvalue >= 0)
 						.map((item, index) => (
 							<StyledTableRow key={item.itemid}>
-								<StyledTableCell>{item.itemid}</StyledTableCell>
+								<StyledTableCell width="15%">
+									{item.itemid}
+								</StyledTableCell>
 								<StyledTableCell>{item.name}</StyledTableCell>
 								<StyledTableCell align="right">
 									{" "}

@@ -6,7 +6,10 @@ import {
 	TableCell,
 	TableHead,
 	TableRow,
+	Box,
 } from "@material-ui/core";
+import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 const useStyles = makeStyles((theme) => ({
 	seeMore: {
@@ -44,24 +47,41 @@ export default function TableDevice(props) {
 			<Table size="small" className={classes.seeMore}>
 				<TableHead>
 					<TableRow>
-						<TableCell>Index</TableCell>
-						<TableCell>Description</TableCell>
-						<TableCell>Status</TableCell>
-						<TableCell>Bits Recieved (bps)</TableCell>
-						<TableCell>Bits Sent (bps)</TableCell>
+						<TableCell width="5%">Index</TableCell>
+						<TableCell width="30%">Description</TableCell>
+						<TableCell width="15%">Status</TableCell>
+						<TableCell width="10%">Bits Recieved (bps)</TableCell>
+						<TableCell width="10%">Bits Sent (bps)</TableCell>
 						<TableCell align="right">Speed (Mbps)</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
 					{array.map((item, index) => (
 						<TableRow key={index}>
-							<TableCell>{index + 1}</TableCell>
-							<TableCell>{item[0]}</TableCell>
-							<TableCell>
-								{(item[1] = 1 ? "up(1)" : "down(0)")}
+							<TableCell width="2%">{index + 1}</TableCell>
+							<TableCell width="40%">{item[0]}</TableCell>
+							<TableCell width="10%">
+								{
+									(item[1] = 1 ? (
+										<Box
+											color="success.main"
+											fontWeight="fontWeightMedium"
+										>
+											up
+											<ArrowDropUpIcon />
+										</Box>
+									) : (
+										<Box
+											color="error.main"
+											fontWeight="fontWeightMedium"
+										>
+											down <ArrowDropDownIcon />
+										</Box>
+									))
+								}
 							</TableCell>
-							<TableCell>{item[2]}</TableCell>
-							<TableCell>{item[3]}</TableCell>
+							<TableCell width="20%">{item[2]}</TableCell>
+							<TableCell width="20%">{item[3]}</TableCell>
 							<TableCell align="right">1000</TableCell>
 						</TableRow>
 					))}
