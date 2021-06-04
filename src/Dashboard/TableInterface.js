@@ -41,7 +41,7 @@ export default function TableInterface(props) {
 		let obj = { ...arraybit };
 		array.push(obj);
 	}
-	console.log("mang", array);
+	// console.log("mang", array);
 	return (
 		<React.Fragment>
 			<Table size="small" className={classes.seeMore}>
@@ -61,7 +61,7 @@ export default function TableInterface(props) {
 							<TableCell width="2%">{index + 1}</TableCell>
 							<TableCell width="40%">{item[0]}</TableCell>
 							<TableCell width="10%">
-								{item[1] < 1.5 ? (
+								{item[1] <= 1 ? (
 									<Box
 										color="success.main"
 										fontWeight="fontWeightMedium"

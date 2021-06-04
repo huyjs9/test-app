@@ -21,9 +21,18 @@ const useStyles = makeStyles({
 
 export default function Alert(props) {
 	const classes = useStyles();
-	const { alertdata, ipUrl, hostid, setAlertdata } = props;
+	const { alertdata, ipUrl, hostid, setAlertdata, host } = props;
 	const fakeData = alertdata; //Nhận dữ liệu mảng Item đã lưu để mapping
-
+	const data = host;
+	console.log("hello", data);
+	let arrayhost = [];
+	for (let i = 0; i < data.length; i++) {
+		let arrayhostbit = [];
+		arrayhostbit.push(data[i].hostid);
+		let obj = [...arrayhostbit];
+		arrayhost.push(obj);
+	}
+	console.log("abc", arrayhost);
 	useEffect(async () => {
 		if (hostid) {
 			const alertData = await axios.post(
@@ -40,7 +49,7 @@ export default function Alert(props) {
 				}
 			);
 			setAlertdata(alertData.data.result); //Lưu dữ liệu mảng Item
-			console.log("456", alertData.data.result);
+			// console.log("456", alertData.data.result);
 		} else {
 			setAlertdata([]);
 		}

@@ -354,6 +354,7 @@ export default function Display() {
 							<Card>
 								<Card>
 									<Alert
+										host={host}
 										alertdata={alertdata}
 										ipUrl={ipUrl}
 										hostid={hostid}
