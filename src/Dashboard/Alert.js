@@ -24,15 +24,13 @@ export default function Alert(props) {
 	const { alertdata, ipUrl, hostid, setAlertdata, host } = props;
 	const fakeData = alertdata; //Nhận dữ liệu mảng Item đã lưu để mapping
 	const data = host;
-	console.log("hello", data);
-	let arrayhost = [];
+	let hostgroup = [];
 	for (let i = 0; i < data.length; i++) {
-		let arrayhostbit = [];
-		arrayhostbit.push(data[i].hostid);
-		let obj = [...arrayhostbit];
-		arrayhost.push(obj);
+		hostgroup.push(data[i].hostid);
+		// let obj = [...arrayhostbit];
+		// arrayhost.push(obj);
 	}
-	console.log("abc", arrayhost);
+	console.log("abc", hostgroup);
 	useEffect(async () => {
 		if (hostid) {
 			const alertData = await axios.post(
@@ -42,7 +40,7 @@ export default function Alert(props) {
 					method: "alert.get",
 					params: {
 						output: ["subject"],
-						hostids: hostid,
+						hostids: hostgroup,
 					},
 					auth: JSON.parse(localStorage.getItem("token")),
 					id: 1,

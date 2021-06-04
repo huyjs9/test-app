@@ -350,7 +350,7 @@ export default function Display() {
 								<TableInterface itemdata={itemdata} />
 							</Card>
 						</Grid>
-						<Grid item xs={6}>
+						<Grid item xs={12}>
 							<Card>
 								<Card>
 									<Alert
