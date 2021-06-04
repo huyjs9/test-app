@@ -11,6 +11,7 @@ import Menu from "@material-ui/core/Menu";
 import Alert from "@material-ui/lab/Alert";
 import axios from "axios";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import {StyledNotifyButtonContainer} from '../styles/Dashboard.styled';
 
 const StyledMenu = withStyles({
 	paper: {
@@ -104,7 +105,7 @@ export default function Notifications(props) {
 	}
 	console.log(num);
 	return (
-		<div>
+		<StyledNotifyButtonContainer>
 			<IconButton color="inherit" onClick={handleClickListItem}>
 				<Badge badgeContent={num} color="secondary">
 					<NotificationsIcon />
@@ -129,6 +130,6 @@ export default function Notifications(props) {
 					</MenuItem>
 				))}
 			</StyledMenu>
-		</div>
+		</StyledNotifyButtonContainer>
 	);
 }
