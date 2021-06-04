@@ -39,44 +39,53 @@ const useStyles = makeStyles({
 	},
 });
 
-export default function Devices(props) {
+export default function Items(props) {
 	const classes = useStyles();
 	const { itemdata, ipUrl, hostid, setItemdata } = props;
 	const fakeData = itemdata; //Nhận dữ liệu mảng Item đã lưu để mapping
+	// console.log('itemdata device', itemdata);
 
-	useEffect(async () => {
-		console.log("hostid", JSON.stringify(hostid));
-		console.log("IP", ipUrl);
-		if (hostid) {
-			const itemData = await axios.post(
-				`http://${ipUrl}/zabbix/api_jsonrpc.php`,
-				{
-					jsonrpc: "2.0",
-					method: "item.get",
-					params: {
-						output: [
-							"itemid",
-							"name",
-							"description",
-							"lastvalue",
-							"units",
-						],
-						hostids: hostid,
-						search: {
-							name: "",
-						},
-						sortfield: "name",
-					},
-					auth: JSON.parse(localStorage.getItem("token")),
-					id: 1,
-				}
-			);
-			setItemdata(itemData.data.result); //Lưu dữ liệu mảng Item
-			console.log("123", itemData.data.result);
-		} else {
-			setItemdata([]);
-		}
-	}, [hostid]);
+	// useEffect(async () => {
+	// 	console.log("hostid", JSON.stringify(hostid));
+	// 	console.log("IP", ipUrl);
+	// 	if (hostid) {
+	// 		const itemData = await axios.post(
+	// 			`http://${ipUrl}/zabbix/api_jsonrpc.php`,
+	// 			{
+	// 				jsonrpc: "2.0",
+	// 				method: "item.get",
+	// 				params: {
+	// 					output: [
+	// 						"itemid",
+	// 						"name",
+	// 						"description",
+	// 						"lastvalue",
+	// 						"units",
+	// 					],
+	// 					hostids: hostid,
+	// 					search: {
+	// 						name: "",
+	// 					},
+	// 					sortfield: "name",
+	// 				},
+	// 				auth: JSON.parse(localStorage.getItem("token")),
+	// 				id: 1,
+	// 			}
+	// 		);
+	// 		setItemdata(itemData.data.result); //Lưu dữ liệu mảng Item
+	// 		console.log("123", itemData.data.result);
+	// 	} else {
+	// 		setItemdata([]);
+	// 	}
+	// }, [hostid]);
+
+	// useEffect(()=>{
+	// 	// console.log();
+	// 	console.log('itemdata device', itemdata);
+	// 	if(itemdata.length > 0){
+	// 		setTestData([...itemdata]);
+	// 	}
+	// },[itemdata])
 	return (
 		<React.Fragment>
 			<Table size="small" className={classes.seeMore}>

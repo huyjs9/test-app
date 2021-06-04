@@ -10,7 +10,7 @@ function preventDefault(event) {
 }
 
 const useStyles = makeStyles((theme) => ({
-	depositContext: {
+	hostContext: {
 		flex: 1,
 	},
 	forHost: {
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 // Sau này thay cái fakeData này bằng cái host là props truyền dô á
 
-export default function Deposits(props) {
+export default function Hosts(props) {
 	const classes = useStyles();
 	const { host, currentHostIndex, setCurrentHostIndex, hostid, setHostid } =
 		props;
@@ -53,7 +53,7 @@ export default function Deposits(props) {
 
 	return (
 		<React.Fragment>
-			<Typography color="textPrimary" className={classes.depositContext}>
+			<Typography color="textPrimary" className={classes.hostContext}>
 				{/* <Box fontWeight="fontWeightMedium" className={classes.forHost}>
 					Returned Authentication: {data}
 				</Box> */}

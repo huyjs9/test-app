@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function TableDevice(props) {
+export default function TableInterface(props) {
 	const classes = useStyles();
 	const { itemdata } = props;
 	const [currentindex, setCurrentindex] = useState(null);

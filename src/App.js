@@ -7,7 +7,6 @@ import Dashboard from "./Dashboard/Dashboard";
 import localIpUrl from "local-ip-url";
 import TextField from "./Dashboard/TextField";
 import Button from "./Dashboard/Button";
-import Deposits from "./Dashboard/Deposits";
 import Login from "./Page/Login";
 import Register from "./Page/Register";
 import Account from "./Page/Account";

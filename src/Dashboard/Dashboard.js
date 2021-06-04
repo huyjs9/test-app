@@ -168,7 +168,7 @@ export default function Dashboard() {
 						onClick={logout}
 						className={classes.submit}
 					>
-						<ListItem button>
+						<ListItem button >
 							<ListItemIcon>
 								<ExitToAppIcon />
 							</ListItemIcon>

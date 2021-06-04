@@ -23,14 +23,15 @@ import {
 import "../styles/cardsession.css";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "./Button";
-import Deposits from "./Deposits";
-import Devices from "./Devices";
-import TableDevice from "./TableDevice";
+import Hosts from "./Hosts";
+import Items from "./Items";
+import TableInterface from "./TableInterface";
 import TextField from "./TextField";
 import Alert from "./Alert";
 import Search from "./Search";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -110,7 +111,7 @@ export default function Display() {
 	const [host, setHost] = useState([]); //Truyền cho Button để lưu dữ liệu Host
 	const [itemdata, setItemdata] = useState([]); //Truyền Button để lưu dữ liệu Item
 	const [alertdata, setAlertdata] = useState([]); //Truyền Alert để lưu dữ liệu Alert
-	const [currentHostIndex, setCurrentHostIndex] = useState(null); //Truyền cho Deposits để map id trong mảng của Host
+	const [currentHostIndex, setCurrentHostIndex] = useState(null); //Truyền cho Host để map id trong mảng của Host
 	const [hostid, setHostid] = useState(null); //State để lưu hostid
 	const [Pushit1, setPushit1] = useState(true); //Thay đổi việc nhấn nút Button
 	const [searched, setSearched] = useState(""); //Truyền cho Search để search table
@@ -120,6 +121,42 @@ export default function Display() {
 		setPushit(false); //Truyền cho Button để thực hiện nhấn nút
 		console.log(Pushit);
 	};
+
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	useEffect(async () => {
+		// console.log("hostid", JSON.stringify(hostid));
+		// console.log("IP", ipUrl);
+		if (hostid) {
+			const itemData = await axios.post(
+				`http://${ipUrl}/zabbix/api_jsonrpc.php`,
+				{
+					jsonrpc: "2.0",
+					method: "item.get",
+					params: {
+						output: [
+							"itemid",
+							"name",
+							"description",
+							"lastvalue",
+							"units",
+						],
+						hostids: hostid,
+						search: {
+							name: "",
+						},
+						sortfield: "name",
+					},
+					auth: JSON.parse(localStorage.getItem("token")),
+					id: 1,
+				}
+			);
+			setItemdata(itemData.data.result); //Lưu dữ liệu mảng Item
+			setRows(itemData.data.result);
+			console.log("123", itemData.data.result);
+		} else {
+			setItemdata([]);
+		}
+	}, [hostid]);
 
 	const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 	return (
@@ -218,7 +255,7 @@ export default function Display() {
 								<MDBCardBody style={{ overflow: "auto" }}>
 									{/* Nho sua lai */}
 									{Pushit === false && ipUrl && (
-										<Deposits
+										<Hosts
 											host={host}
 											hostid={hostid}
 											setHostid={setHostid}
@@ -276,14 +313,6 @@ export default function Display() {
 										<IconButton
 											aria-label="delete"
 											component="span"
-											// onClick={() => (
-											// 	<Devices
-											// 		itemdata={itemdata}
-											// 		ipUrl={ipUrl}
-											// 		hostid={hostid}
-											// 		setItemdata={setItemdata}
-											// 	/>
-											// )}
 										>
 											<RefreshIcon fontSize="large" />
 										</IconButton>
@@ -291,7 +320,7 @@ export default function Display() {
 								</StyledBox>
 
 								<MDBCardBody style={{ overflow: "auto" }}>
-									<Devices
+									<Items
 										itemdata={rows}
 										ipUrl={ipUrl}
 										hostid={hostid}
@@ -321,7 +350,7 @@ export default function Display() {
 						{/* Devices */}
 						<Grid item xs={6}>
 							<Card>
-								<TableDevice itemdata={itemdata} />
+								<TableInterface itemdata={itemdata} />
 							</Card>
 						</Grid>
 						<Grid item xs={6}>

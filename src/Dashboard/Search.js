@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import SearchBar from "material-ui-search-bar";
@@ -15,19 +16,20 @@ export default function Search(props) {
 	const classes = useStyles();
 	const { itemdata, searched, setSearched, setRows } = props;
 
+	// useEffect(()=> {
+	// 	setRows([...itemdata]);
+	// }, []);
 	const requestSearch = (searchedVal) => {
 		const filteredRows = itemdata.filter((row) => {
 			return row.name.toLowerCase().includes(searchedVal.toLowerCase());
 		});
 		setRows(filteredRows);
+
+		//  else {
+		// 	setRows(itemdata);
+		// }
 	};
-	// function find(rows) {
-	// 	return rows.filter(
-	// 		(row) =>
-	// 			row.itemid.indexOf(searched) > -1 ||
-	// 			row.name.toLowerCase().indexOf(searched) > -1
-	// 	);
-	// }
+
 	const cancelSearch = () => {
 		setSearched("");
 		requestSearch(searched);
