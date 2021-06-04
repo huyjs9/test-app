@@ -32,6 +32,7 @@ import Notifications from "./Notifications";
 import { Router } from "@reach/router";
 import firebase from "../firebase";
 import { useNavigate } from "@reach/router";
+import { StyledNotifyButtonContainer } from "../styles/Dashboard.styled";
 
 const drawerWidth = 240;
 
@@ -150,6 +151,7 @@ export default function Dashboard() {
 							classes.menuButton,
 							open && classes.menuButtonHidden
 						)}
+						style={{ outline: "none" }}
 					>
 						<MenuIcon />
 					</IconButton>
@@ -168,6 +170,7 @@ export default function Dashboard() {
 						type="submit"
 						variant="contained"
 						onClick={logout}
+						style={{ outline: "none" }}
 					>
 						<ExitToAppIcon />
 					</IconButton>
@@ -184,7 +187,10 @@ export default function Dashboard() {
 				open={open}
 			>
 				<div className={classes.toolbarIcon}>
-					<IconButton onClick={handleDrawerClose}>
+					<IconButton
+						onClick={handleDrawerClose}
+						style={{ outline: "none" }}
+					>
 						<ChevronLeftIcon />
 					</IconButton>
 				</div>

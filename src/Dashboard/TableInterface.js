@@ -61,24 +61,22 @@ export default function TableInterface(props) {
 							<TableCell width="2%">{index + 1}</TableCell>
 							<TableCell width="40%">{item[0]}</TableCell>
 							<TableCell width="10%">
-								{
-									(item[1] = 1 ? (
-										<Box
-											color="success.main"
-											fontWeight="fontWeightMedium"
-										>
-											up
-											<ArrowDropUpIcon />
-										</Box>
-									) : (
-										<Box
-											color="error.main"
-											fontWeight="fontWeightMedium"
-										>
-											down <ArrowDropDownIcon />
-										</Box>
-									))
-								}
+								{item[1] < 1.5 ? (
+									<Box
+										color="success.main"
+										fontWeight="fontWeightMedium"
+									>
+										up
+										<ArrowDropUpIcon />
+									</Box>
+								) : (
+									<Box
+										color="error.main"
+										fontWeight="fontWeightMedium"
+									>
+										down <ArrowDropDownIcon />
+									</Box>
+								)}
 							</TableCell>
 							<TableCell width="20%">{item[2]}</TableCell>
 							<TableCell width="20%">{item[3]}</TableCell>

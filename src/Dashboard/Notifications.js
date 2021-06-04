@@ -11,7 +11,7 @@ import Menu from "@material-ui/core/Menu";
 import Alert from "@material-ui/lab/Alert";
 import axios from "axios";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import {StyledNotifyButtonContainer} from '../styles/Dashboard.styled';
+import { StyledNotifyButtonContainer } from "../styles/Dashboard.styled";
 
 const StyledMenu = withStyles({
 	paper: {
