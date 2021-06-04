@@ -36,13 +36,13 @@ function App() {
 	const handleDisplay = () => {
 		setDisplay(!display);
 	};
-	useEffect(() => {
-		firebase.isInitialized().then((val) => {
-			setFirebaseInitialized(val);
-		});
-	});
+	// useEffect(() => {
+	// 	firebase.isInitialized().then((val) => {
+	// 		setFirebaseInitialized(val);
+	// 	});
+	// });
 
-	return firebaseInitialized !== false ? (
+	return (
 		<div>
 			<Dashboard></Dashboard>
 			<p className="App">
@@ -51,10 +51,6 @@ function App() {
 				<Deposits></Deposits> */}
 				{/* {display === false && <p className="App">url: {data}</p>} */}
 			</p>
-		</div>
-	) : (
-		<div id="loader">
-			<CircularProgress />
 		</div>
 	);
 }

@@ -47,6 +47,7 @@ export default function Search(props) {
 
 				// onChange={handleChange}
 			></SearchBar>
+			
 		</div>
 	);
 }

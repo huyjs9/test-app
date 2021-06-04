@@ -3,20 +3,24 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Drawer from "@material-ui/core/Drawer";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
+import {
+	CssBaseline,
+	Drawer,
+	AppBar,
+	Toolbar,
+	List,
+	Typography,
+	Divider,
+	IconButton,
+	Container,
+	Grid,
+	Box,
+	ListItem,
+	ListItemIcon,
+	Button,
+} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import MainListItems from "./MainListItems";
 import Login from "../Page/Login";
@@ -24,6 +28,7 @@ import Register from "../Page/Register";
 import Display from "./Display";
 import Account from "../Page/Account";
 import Chart from "./Chart";
+import Notifications from "./Notifications";
 import { Router } from "@reach/router";
 import firebase from "../firebase";
 import { useNavigate } from "@reach/router";
@@ -121,11 +126,9 @@ export default function Dashboard() {
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
-		console.log(open);
 	};
 	const handleDrawerClose = () => {
 		setOpen(false);
-		console.log(open);
 	};
 
 	const fixedHeightPaper = clsx(classes.container, classes.appBarSpacer);
@@ -159,20 +162,14 @@ export default function Dashboard() {
 					>
 						Dashboard
 					</Typography>
+					<Notifications />
 					<IconButton
 						color="inherit"
 						type="submit"
-						fullWidth
 						variant="contained"
-						color="secondary"
 						onClick={logout}
-						className={classes.submit}
 					>
-						<ListItem button >
-							<ListItemIcon>
-								<ExitToAppIcon />
-							</ListItemIcon>
-						</ListItem>
+						<ExitToAppIcon />
 					</IconButton>
 				</Toolbar>
 			</AppBar>

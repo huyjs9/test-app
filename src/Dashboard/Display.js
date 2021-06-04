@@ -10,8 +10,6 @@ import {
 	IconButton,
 	Divider,
 } from "@material-ui/core";
-import RefreshIcon from "@material-ui/icons/Refresh";
-import deepPurple from "@material-ui/core/colors/deepPurple";
 import {
 	MDBCard,
 	MDBCardBody,
@@ -20,6 +18,7 @@ import {
 	MDBCol,
 	MDBCardText,
 } from "mdbreact";
+import RefreshIcon from "@material-ui/icons/Refresh";
 import "../styles/cardsession.css";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
@@ -94,7 +93,7 @@ const StyledBox = withStyles({
 		background: "linear-gradient(45deg, #FE88A2 30%, #FFA475 90%)",
 		// borderRadius: 3,
 		border: 0,
-		color: "white",
+		color: "black",
 		// height: 48,
 		// padding: "0 30px",
 		boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
@@ -275,19 +274,13 @@ export default function Display() {
 								className="cascading-admin-card"
 								style={{ height: "420px" }}
 							>
-								<StyledBox bgcolor="text.secondary">
+								<StyledBox>
 									{" "}
 									<div className="admin-up">
 										<div className="data">
 											<Box>
 												<h5>
-													<strong
-														style={{
-															color: "white",
-														}}
-													>
-														ITEM LIST
-													</strong>
+													<strong>ITEM LIST</strong>
 												</h5>
 											</Box>
 										</div>
@@ -317,6 +310,10 @@ export default function Display() {
 											<RefreshIcon fontSize="large" />
 										</IconButton>
 									</Box>
+									<Divider
+										variant="full"
+										classes={{ root: classes.divider }}
+									/>
 								</StyledBox>
 
 								<MDBCardBody style={{ overflow: "auto" }}>
@@ -348,7 +345,7 @@ export default function Display() {
 							</Paper> */}
 						</Grid>
 						{/* Devices */}
-						<Grid item xs={6}>
+						<Grid item xs={12}>
 							<Card>
 								<TableInterface itemdata={itemdata} />
 							</Card>
