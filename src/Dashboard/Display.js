@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
 	Box,
 	Card,
@@ -102,26 +103,34 @@ const StyledBox = withStyles({
 		textTransform: "capitalize",
 	},
 })(Box);
-export default function Display() {
+export default function Display(props) {
 	const classes = useStyles();
-	const [ipUrl, setIpUrl] = useState(""); //ipUrl truyền cho TextFeild rồi truyền cho Button để post
+	const {
+		alertdata,
+		setAlertdata,
+		ipUrl,
+		setIpUrl,
+		hostid,
+		setHostid,
+		host,
+		setHost,
+	} = props;
+	// const [ipUrl, setIpUrl] = useState(""); //ipUrl truyền cho TextFeild rồi truyền cho Button để post
 	const [publicValue, setPublicValue] = useState(null); //Truyền cho Select
 	const [Pushit, setPushit] = useState(true); //Thay đổi việc nhấn nút Button
-	const [host, setHost] = useState([]); //Truyền cho Button để lưu dữ liệu Host
+	// const [host, setHost] = useState([]); //Truyền cho Button để lưu dữ liệu Host
 	const [itemdata, setItemdata] = useState([]); //Truyền Button để lưu dữ liệu Item
-	const [alertdata, setAlertdata] = useState([]); //Truyền Alert để lưu dữ liệu Alert
+	// const [alertdata, setAlertdata] = useState([]); //Truyền Alert để lưu dữ liệu Alert
 	const [currentHostIndex, setCurrentHostIndex] = useState(null); //Truyền cho Host để map id trong mảng của Host
-	const [hostid, setHostid] = useState(null); //State để lưu hostid
+	// const [hostid, setHostid] = useState(null); //State để lưu hostid
 	const [Pushit1, setPushit1] = useState(true); //Thay đổi việc nhấn nút Button
 	const [searched, setSearched] = useState(""); //Truyền cho Search để search table
 	const [rows, setRows] = useState(itemdata);
-
 	const handlePush = () => {
 		setPushit(false); //Truyền cho Button để thực hiện nhấn nút
 		console.log(Pushit);
 	};
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(async () => {
 		// console.log("hostid", JSON.stringify(hostid));
 		// console.log("IP", ipUrl);
@@ -151,7 +160,7 @@ export default function Display() {
 			);
 			setItemdata(itemData.data.result); //Lưu dữ liệu mảng Item
 			setRows(itemData.data.result);
-			console.log("123", itemData.data.result);
+			// console.log("123", itemData.data.result);
 		} else {
 			setItemdata([]);
 		}

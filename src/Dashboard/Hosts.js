@@ -42,14 +42,13 @@ export default function Hosts(props) {
 	};
 	const open = Boolean(anchorEl);
 
-	console.log(fakeDataHost);
+	// console.log(fakeDataHost);
 	// console.log(fakeData);
 	let data = JSON.parse(localStorage.getItem("token"));
-	// let data2 = JSON.parse(localStorage.getItem("hostdata"));
-	// let data3 = JSON.parse(localStorage.getItem("itemdata"));
+
 	// console.log(host);
 	// console.log(data3.result);
-	console.log(JSON.stringify(currentHostIndex));
+	// console.log(JSON.stringify(currentHostIndex));
 
 	return (
 		<React.Fragment>

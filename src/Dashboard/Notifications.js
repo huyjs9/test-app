@@ -16,6 +16,8 @@ import { StyledNotifyButtonContainer } from "../styles/Dashboard.styled";
 const StyledMenu = withStyles({
 	paper: {
 		border: "1px solid #d3d4d5",
+		width: "300px",
+		height: "100px",
 	},
 })((props) => (
 	<Menu
@@ -23,11 +25,11 @@ const StyledMenu = withStyles({
 		getContentAnchorEl={null}
 		anchorOrigin={{
 			vertical: "bottom",
-			horizontal: "center",
+			horizontal: "right",
 		}}
 		transformOrigin={{
 			vertical: "top",
-			horizontal: "center",
+			horizontal: "right",
 		}}
 		{...props}
 	/>
@@ -44,20 +46,54 @@ const StyledMenuItem = withStyles((theme) => ({
 	},
 }))(MenuItem);
 
-const options = [
-	<Alert severity="error">This is an error alert — check it out!</Alert>,
-	<Alert severity="warning">This is a warning alert — check it out!</Alert>,
-	<Alert severity="info">This is an info alert — check it out!</Alert>,
-	<Alert severity="success">This is a success alert — check it out!</Alert>,
-];
-
 export default function Notifications(props) {
-	const { alertdata, ipUrl, hostid, setAlertdata } = props;
+	const { alertdata, ipUrl, hostid, setAlertdata, host } = props;
 	const [num, setNum] = useState(0);
 	const [anchorEl, setAnchorEl] = React.useState(null);
+	// const [options, setOptions] = useState(null);
 	const [selectedIndex, setSelectedIndex] = React.useState(1);
 	const fakeData = alertdata; //Nhận dữ liệu mảng Item đã lưu để mapping
+	console.log("IP", ipUrl);
+	const data = host;
+	let hostgroup = [];
+	for (let i = 0; i < data.length; i++) {
+		hostgroup.push(data[i].hostid);
+		// let obj = [...arrayhostbit];
+		// arrayhost.push(obj);
+	}
+	useEffect(async () => {
+		if (ipUrl) {
+			const alertData = await axios.post(
+				`http://${ipUrl}/zabbix/api_jsonrpc.php`,
+				{
+					jsonrpc: "2.0",
+					method: "alert.get",
+					params: {
+						output: ["subject"],
+						hostids: hostgroup,
+					},
+					auth: JSON.parse(localStorage.getItem("token")),
+					id: 1,
+				}
+			);
+			setAlertdata(alertData.data.result); //Lưu dữ liệu mảng Item
+			// console.log("456", alertData.data.result);
+		} else {
+			setAlertdata([]);
+		}
+	}, [ipUrl]);
 
+	const options = [
+		<Alert severity="error">This is an error alert — check it out!</Alert>,
+		<Alert severity="warning">
+			This is a warning alert — check it out!
+		</Alert>,
+		<Alert severity="info">This is an info alert — check it out!</Alert>,
+		<Alert severity="success">
+			This is a success alert — check it out!
+		</Alert>,
+	];
+	// ******** //
 	// useEffect(async () => {
 	// 	if (hostid) {
 	// 		const alertData = await axios.post(
@@ -80,29 +116,28 @@ export default function Notifications(props) {
 	// 	}
 	// }, [hostid]);
 
+	useEffect(() => {
+		setNum(alertdata.length);
+	}, []);
+
 	const handleClickListItem = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
 
-	const handleMenuItemClick = (event, index) => {
-		setSelectedIndex(index);
-		setAnchorEl(null);
-	};
+	// const handleMenuItemClick = (event, index) => {
+	// 	setSelectedIndex(index);
+	// 	setAnchorEl(null);
+	// };
 
 	const handleClose = () => {
 		setAnchorEl(null);
-	};
-
-	const handleClickAway = () => {
 		setNum(0);
 	};
 
-	const handleClick = () => {
-		setNum(num + 1);
-	};
-	if (num === 9) {
-		setNum(0);
-	}
+	// const handleClick = () => {
+	// 	setNum(options.length);
+	// };
+
 	console.log(num);
 	return (
 		<StyledNotifyButtonContainer>
@@ -118,15 +153,16 @@ export default function Notifications(props) {
 				open={Boolean(anchorEl)}
 				onClose={handleClose}
 			>
-				{options.map((option, index) => (
+				{alertdata && <MenuItem>There is no notifications</MenuItem>}
+				{alertdata.map((item, index) => (
 					<MenuItem
-						key={option}
+						key={index}
 						// disabled={index === 0}
 						// selected={index === selectedIndex}
-						onClick={() => setNum(index + 1)}
+						// onClick={() => setNum(index + 1)}
 						// onClick={(event) => handleMenuItemClick(event, index)}
 					>
-						{option}
+						{item.subject}
 					</MenuItem>
 				))}
 			</StyledMenu>

@@ -32,7 +32,7 @@ export default function Alert(props) {
 	}
 	console.log("abc", hostgroup);
 	useEffect(async () => {
-		if (hostid) {
+		if (ipUrl) {
 			const alertData = await axios.post(
 				`http://${ipUrl}/zabbix/api_jsonrpc.php`,
 				{
@@ -51,7 +51,8 @@ export default function Alert(props) {
 		} else {
 			setAlertdata([]);
 		}
-	}, [hostid]);
+	}, [ipUrl]);
+
 	return (
 		<React.Fragment>
 			<Table size="small" className={classes.seeMore}>

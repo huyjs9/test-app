@@ -123,6 +123,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
 	const classes = useStyles();
+	const [alertdata, setAlertdata] = useState([]); //Truyền Alert để lưu dữ liệu Alert
+	const [ipUrl, setIpUrl] = useState(""); //ipUrl truyền cho TextFeild rồi truyền cho Button để post
+	const [hostid, setHostid] = useState(null); //State để lưu hostid
+	const [host, setHost] = useState([]); //Truyền cho Button để lưu dữ liệu Host
+
 	const [open, setOpen] = useState(true);
 
 	const handleDrawerOpen = () => {
@@ -164,7 +169,13 @@ export default function Dashboard() {
 					>
 						Dashboard
 					</Typography>
-					<Notifications />
+					<Notifications
+						alertdata={alertdata}
+						setAlertdata={setAlertdata}
+						ipUrl={ipUrl}
+						hostid={hostid}
+						host={host}
+					/>
 					<IconButton
 						color="inherit"
 						type="submit"
@@ -211,7 +222,17 @@ export default function Dashboard() {
 						}}
 					>
 						<Router style={{ width: "100%" }}>
-							<Display path="dashboard" />
+							<Display
+								alertdata={alertdata}
+								setAlertdata={setAlertdata}
+								ipUrl={ipUrl}
+								setIpUrl={setIpUrl}
+								hostid={hostid}
+								setHostid={setHostid}
+								host={host}
+								setHost={setHost}
+								path="dashboard"
+							/>
 							<Chart path="graph" />
 						</Router>
 					</Grid>
