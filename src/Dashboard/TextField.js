@@ -29,24 +29,18 @@ export default function FormPropsTextFields(props) {
 	};
 
 	return (
-		<form
-			className={classes.root}
-			noValidate
-			autoComplete="off"
-			// onSubmit={handleSubmit}
-		>
-			<div>
-				<TextField
-					required
-					id="standard-required"
-					label="IP Address"
-					variant="outlined"
-					value={ipUrl}
-					onChange={handleChange}
-					// onChange={handleChange}
-				/>
-			</div>
-			{/* <div>Ip is: {name}</div> */}
-		</form>
+		<div className={classes.root}>
+			<TextField
+				className={classes.root}
+				required
+				id="standard-required"
+				label="IP Address"
+				variant="outlined"
+				value={ipUrl}
+				onChange={handleChange}
+				noValidate
+				// onChange={handleChange}
+			/>
+		</div>
 	);
 }

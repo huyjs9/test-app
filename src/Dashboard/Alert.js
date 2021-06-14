@@ -9,6 +9,7 @@ import {
 	TableRow,
 } from "@material-ui/core";
 import axios from "axios";
+import { setIn } from "formik";
 
 const useStyles = makeStyles({
 	depositContext: {
@@ -21,8 +22,9 @@ const useStyles = makeStyles({
 
 export default function Alert(props) {
 	const classes = useStyles();
-	const { alertdata, ipUrl, hostid, setAlertdata, host } = props;
+	const { alertdata, ipUrl, setAlertdata, host } = props;
 	const fakeData = alertdata; //Nhận dữ liệu mảng Item đã lưu để mapping
+	const test = alertdata;
 	const data = host;
 	let hostgroup = [];
 	for (let i = 0; i < data.length; i++) {
@@ -32,14 +34,14 @@ export default function Alert(props) {
 	}
 	console.log("abc", hostgroup);
 	useEffect(async () => {
-		if (ipUrl) {
+		if (hostgroup) {
 			const alertData = await axios.post(
 				`http://${ipUrl}/zabbix/api_jsonrpc.php`,
 				{
 					jsonrpc: "2.0",
 					method: "alert.get",
 					params: {
-						output: ["subject"],
+						output: "extend",
 						hostids: hostgroup,
 					},
 					auth: JSON.parse(localStorage.getItem("token")),
@@ -47,12 +49,33 @@ export default function Alert(props) {
 				}
 			);
 			setAlertdata(alertData.data.result); //Lưu dữ liệu mảng Item
-			// console.log("456", alertData.data.result);
+			// console.log("alertdata", alertData.data.result);
 		} else {
 			setAlertdata([]);
 		}
-	}, [ipUrl]);
+	}, [host]);
 
+	console.log("data", test);
+	let sixnews = [];
+	if (test.length > 6) {
+		for (let i = test.length - 1; i >= test.length - 6; i--) {
+			sixnews.push(test[i].message);
+		}
+
+		console.log("lon hon 6");
+	} else {
+		for (let i = test.length - 1; i >= 0; i--) {
+			sixnews.push(test[i].message);
+		}
+		console.log("nho hon 6");
+	}
+	console.log("test", sixnews);
+
+	// for (let i = 0; i < 6; i++) {
+	// 	let y = alertdata.length - i;
+	// 	sixnews.push(alertdata[0].subject);
+	// }
+	// console.log("a", sixnews);
 	return (
 		<React.Fragment>
 			<Table size="small" className={classes.seeMore}>
@@ -63,10 +86,10 @@ export default function Alert(props) {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{fakeData.map((item, index) => (
+					{sixnews.map((item, index) => (
 						<TableRow key={index}>
 							<TableCell>{index + 1}</TableCell>
-							<TableCell align="right">{item.subject}</TableCell>
+							<TableCell align="right">{item}</TableCell>
 						</TableRow>
 					))}
 				</TableBody>

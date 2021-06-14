@@ -16,8 +16,8 @@ import { StyledNotifyButtonContainer } from "../styles/Dashboard.styled";
 const StyledMenu = withStyles({
 	paper: {
 		border: "1px solid #d3d4d5",
-		width: "300px",
-		height: "100px",
+		// width: "300px",
+		// height: "100px",
 	},
 })((props) => (
 	<Menu
@@ -61,27 +61,27 @@ export default function Notifications(props) {
 		// let obj = [...arrayhostbit];
 		// arrayhost.push(obj);
 	}
-	useEffect(async () => {
-		if (ipUrl) {
-			const alertData = await axios.post(
-				`http://${ipUrl}/zabbix/api_jsonrpc.php`,
-				{
-					jsonrpc: "2.0",
-					method: "alert.get",
-					params: {
-						output: ["subject"],
-						hostids: hostgroup,
-					},
-					auth: JSON.parse(localStorage.getItem("token")),
-					id: 1,
-				}
-			);
-			setAlertdata(alertData.data.result); //Lưu dữ liệu mảng Item
-			// console.log("456", alertData.data.result);
-		} else {
-			setAlertdata([]);
-		}
-	}, [ipUrl]);
+	// useEffect(async () => {
+	// 	if (ipUrl) {
+	// 		const alertData = await axios.post(
+	// 			`http://${ipUrl}/zabbix/api_jsonrpc.php`,
+	// 			{
+	// 				jsonrpc: "2.0",
+	// 				method: "alert.get",
+	// 				params: {
+	// 					output: ["subject"],
+	// 					hostids: hostgroup,
+	// 				},
+	// 				auth: JSON.parse(localStorage.getItem("token")),
+	// 				id: 1,
+	// 			}
+	// 		);
+	// 		setAlertdata(alertData.data.result); //Lưu dữ liệu mảng Item
+	// 		// console.log("456", alertData.data.result);
+	// 	} else {
+	// 		setAlertdata([]);
+	// 	}
+	// }, [ipUrl]);
 
 	const options = [
 		<Alert severity="error">This is an error alert — check it out!</Alert>,
@@ -93,32 +93,10 @@ export default function Notifications(props) {
 			This is a success alert — check it out!
 		</Alert>,
 	];
-	// ******** //
-	// useEffect(async () => {
-	// 	if (hostid) {
-	// 		const alertData = await axios.post(
-	// 			`http://${ipUrl}/zabbix/api_jsonrpc.php`,
-	// 			{
-	// 				jsonrpc: "2.0",
-	// 				method: "alert.get",
-	// 				params: {
-	// 					output: ["subject"],
-	// 					hostids: hostid,
-	// 				},
-	// 				auth: JSON.parse(localStorage.getItem("token")),
-	// 				id: 1,
-	// 			}
-	// 		);
-	// 		setAlertdata(alertData.data.result); //Lưu dữ liệu mảng Item
-	// 		console.log("456", alertData.data.result);
-	// 	} else {
-	// 		setAlertdata([]);
-	// 	}
-	// }, [hostid]);
 
 	useEffect(() => {
 		setNum(alertdata.length);
-	}, []);
+	}, [alertdata]);
 
 	const handleClickListItem = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -153,7 +131,6 @@ export default function Notifications(props) {
 				open={Boolean(anchorEl)}
 				onClose={handleClose}
 			>
-				{alertdata && <MenuItem>There is no notifications</MenuItem>}
 				{alertdata.map((item, index) => (
 					<MenuItem
 						key={index}
