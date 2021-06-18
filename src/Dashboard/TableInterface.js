@@ -31,16 +31,28 @@ export default function TableInterface(props) {
 	let operation = Data.filter((number1) =>
 		number1.name.includes("Operational")
 	);
+
 	let array = [];
 	for (let i = 0; i < interfacebits.length; i++) {
-		let arraybit = [];
-		arraybit.push(interfacebitr[i].name.replace(": Bits received", ""));
-		arraybit.push(operation[i].lastvalue);
-		arraybit.push(interfacebitr[i].lastvalue);
-		arraybit.push(interfacebits[i].lastvalue);
-		let obj = { ...arraybit };
-		array.push(obj);
+		let object = {};
+		object["description"] = interfacebitr[i].name.replace(
+			": Bits received",
+			""
+		);
+		object["status"] = operation[i].lastvalue;
+		object["bitrecieved"] = interfacebitr[i].lastvalue;
+		object["bitsent"] = interfacebits[i].lastvalue;
+		array.push(object);
+
+		// let arraybit = [];
+		// arraybit.push(interfacebitr[i].name.replace(": Bits received", ""));
+		// arraybit.push(operation[i].lastvalue);
+		// arraybit.push(interfacebitr[i].lastvalue);
+		// arraybit.push(interfacebits[i].lastvalue);
+		// let obj = { ...arraybit };
+		// array.push(obj);
 	}
+
 	// console.log("mang", array);
 	return (
 		<React.Fragment>
@@ -59,9 +71,11 @@ export default function TableInterface(props) {
 					{array.map((item, index) => (
 						<TableRow key={index}>
 							<TableCell width="2%">{index + 1}</TableCell>
-							<TableCell width="40%">{item[0]}</TableCell>
+							<TableCell width="40%">
+								{item.description}
+							</TableCell>
 							<TableCell width="10%">
-								{item[1] <= 1 ? (
+								{item.status <= 1 ? (
 									<Box
 										color="success.main"
 										fontWeight="fontWeightMedium"
@@ -78,8 +92,10 @@ export default function TableInterface(props) {
 									</Box>
 								)}
 							</TableCell>
-							<TableCell width="20%">{item[2]}</TableCell>
-							<TableCell width="20%">{item[3]}</TableCell>
+							<TableCell width="20%">
+								{item.bitrecieved}
+							</TableCell>
+							<TableCell width="20%">{item.bitsent}</TableCell>
 							<TableCell align="right">1000</TableCell>
 						</TableRow>
 					))}

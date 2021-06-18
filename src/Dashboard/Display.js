@@ -29,7 +29,7 @@ import Hosts from "./Hosts";
 import Items from "./Items";
 import TableInterface from "./TableInterface";
 import TextField from "./TextField";
-import Alert from "./Alert";
+import AlertTable from "./AlertTable";
 import Search from "./Search";
 import axios from "axios";
 
@@ -126,14 +126,15 @@ export default function Display(props) {
 	const [Pushit1, setPushit1] = useState(true); //Thay đổi việc nhấn nút Button
 	const [searched, setSearched] = useState(""); //Truyền cho Search để search table
 	const [rows, setRows] = useState(itemdata);
+	const [prevHost, setprevHost] = useState([]);
+
 	const handlePush = () => {
 		setPushit(false); //Truyền cho Button để thực hiện nhấn nút
 		console.log(Pushit);
 	};
 
+	//Đây là bản test
 	useEffect(async () => {
-		// console.log("hostid", JSON.stringify(hostid));
-		// console.log("IP", ipUrl);
 		if (hostid) {
 			const itemData = await axios.post(
 				`http://${ipUrl}/zabbix/api_jsonrpc.php`,
@@ -160,11 +161,52 @@ export default function Display(props) {
 			);
 			setItemdata(itemData.data.result); //Lưu dữ liệu mảng Item
 			setRows(itemData.data.result);
-			// console.log("123", itemData.data.result);
+			console.log("123", itemData.data.result);
 		} else {
 			setItemdata([]);
 		}
 	}, [hostid]);
+
+	//Đây là bản Chính thức
+	// useEffect(() => {
+	// 	async function AutoItem() {
+	// 		if (hostid) {
+	// 			const itemData = await axios.post(
+	// 				`http://${ipUrl}/zabbix/api_jsonrpc.php`,
+	// 				{
+	// 					jsonrpc: "2.0",
+	// 					method: "item.get",
+	// 					params: {
+	// 						output: [
+	// 							"itemid",
+	// 							"name",
+	// 							"description",
+	// 							"lastvalue",
+	// 							"units",
+	// 						],
+	// 						hostids: hostid,
+	// 						search: {
+	// 							name: "",
+	// 						},
+	// 						sortfield: "name",
+	// 					},
+	// 					auth: JSON.parse(localStorage.getItem("token")),
+	// 					id: 1,
+	// 				}
+	// 			);
+	// 			setItemdata(itemData.data.result); //Lưu dữ liệu mảng Item
+	// 			setRows(itemData.data.result);
+	// 			console.log("123", itemData.data.result);
+	// 		} else {
+	// 			setItemdata([]);
+	// 		}
+	// 	}
+	// 	AutoItem();
+	// 	const timeInterval = setInterval(AutoItem, 30000);
+	// 	return () => {
+	// 		clearInterval(timeInterval);
+	// 	};
+	// }, [hostid]);
 
 	const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 	return (
@@ -359,10 +401,10 @@ export default function Display(props) {
 								<TableInterface itemdata={itemdata} />
 							</Card>
 						</Grid>
-						<Grid item xs={12}>
+						{/* <Grid item xs={12}>
 							<Card>
 								<Card>
-									<Alert
+									<AlertTable
 										host={host}
 										alertdata={alertdata}
 										ipUrl={ipUrl}
@@ -371,7 +413,7 @@ export default function Display(props) {
 									/>
 								</Card>
 							</Card>
-						</Grid>
+						</Grid> */}
 					</Grid>
 				</Container>
 			</main>
