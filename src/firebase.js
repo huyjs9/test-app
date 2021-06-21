@@ -70,7 +70,7 @@ class Firebase {
 		await this.auth.createUserWithEmailAndPassword(email, password);
 	}
 	getCurrentUsername() {
-		return this.auth.currentUser && this.auth.currentUser.displayName;
+		return this.auth.currentUser && this.auth.currentUser.email;
 	}
 
 	isInitialized() {

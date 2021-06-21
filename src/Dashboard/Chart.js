@@ -1,81 +1,42 @@
-import React from "react";
-import { useTheme } from "@material-ui/core/styles";
+import * as React from "react";
+import Paper from "@material-ui/core/Paper";
 import {
-	LineChart,
-	Line,
-	XAxis,
-	YAxis,
-	Label,
-	ResponsiveContainer,
-} from "recharts";
-import { Paper } from "@material-ui/core";
-import Title from "./Title";
-
-// Generate Sales Data
-function createData(time, amount) {
-	return { time, amount };
-}
+	Chart,
+	PieSeries,
+	Title,
+} from "@devexpress/dx-react-chart-material-ui";
+import { Animation } from "@devexpress/dx-react-chart";
 
 const data = [
-	createData("00:00", 0),
-	createData("03:00", 0),
-	createData("06:00", 0),
-	createData("09:00", 0),
-	createData("12:00", 0),
-	createData("15:00", 0),
-	createData("18:00", 0),
-	createData("21:00", 0),
-	createData("", undefined),
+	{ country: "Russia", area: 12 },
+	{ country: "Canada", area: 7 },
+	{ country: "USA", area: 7 },
+	{ country: "China", area: 7 },
+	{ country: "Brazil", area: 6 },
+	{ country: "Australia", area: 5 },
+	{ country: "India", area: 2 },
+	{ country: "Others", area: 55 },
 ];
+export default class Demo extends React.PureComponent {
+	constructor(props) {
+		super(props);
 
-export default function Chart() {
-	const theme = useTheme();
+		this.state = {
+			data,
+		};
+	}
 
-	return (
-		<React.Fragment>
-			<Title>Flow Chart</Title>
-			<ResponsiveContainer>
-				<LineChart
-					data={data}
-					margin={{
-						top: 10,
-						right: 16,
-						bottom: 0,
-						left: 24,
-					}}
-				>
-					<XAxis dataKey="time" stroke={theme.palette.text.secondary}>
-						<Label
-							angle={0}
-							position="insideBottom"
-							style={{
-								textAnchor: "middle",
-								fill: theme.palette.text.primary,
-							}}
-						>
-							Time (s)
-						</Label>
-					</XAxis>
-					<YAxis stroke={theme.palette.text.secondary}>
-						<Label
-							angle={270}
-							position="left"
-							style={{
-								textAnchor: "middle",
-								fill: theme.palette.text.primary,
-							}}
-						>
-							Mbps
-						</Label>
-					</YAxis>
-					<Line
-						type="monotone"
-						dataKey="amount"
-						stroke={theme.palette.primary.main}
-						dot={false}
-					/>
-				</LineChart>
-			</ResponsiveContainer>
-		</React.Fragment>
-	);
+	render() {
+		const { data: chartData } = this.state;
+
+		return (
+			<Paper>
+				<Chart data={chartData}>
+					<PieSeries valueField="area" argumentField="country" />
+					<Title text="Area of Countries" />
+					<Animation />
+				</Chart>
+			</Paper>
+		);
+	}
 }

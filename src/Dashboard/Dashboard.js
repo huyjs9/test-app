@@ -22,17 +22,18 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import MenuAccount from "./MenuAccount";
 import MainListItems from "./MainListItems";
 import Login from "../Page/Login";
 import Register from "../Page/Register";
 import Display from "./Display";
-import Account from "../Page/Account";
+import Protected from "./Protected";
 import Chart from "./Chart";
 import Notifications from "./Notifications";
 import { Router } from "@reach/router";
 import firebase from "../firebase";
-import { useNavigate } from "@reach/router";
 import { StyledNotifyButtonContainer } from "../styles/Dashboard.styled";
+import { Link, navigate } from "@reach/router";
 
 const drawerWidth = 240;
 
@@ -127,8 +128,12 @@ export default function Dashboard() {
 	const [ipUrl, setIpUrl] = useState(""); //ipUrl truyền cho TextFeild rồi truyền cho Button để post
 	const [hostid, setHostid] = useState(null); //State để lưu hostid
 	const [host, setHost] = useState([]); //Truyền cho Button để lưu dữ liệu Host
-
 	const [open, setOpen] = useState(true);
+	const [openacc, setOpenacc] = useState(true);
+
+	const handleExit = () => {
+		navigate("/", { replace: true });
+	};
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -176,15 +181,21 @@ export default function Dashboard() {
 						hostid={hostid}
 						host={host}
 					/>
-					<IconButton
+					<MenuAccount openacc={openacc} setOpenacc={setOpenacc} />
+					{/* <IconButton
 						color="inherit"
 						type="submit"
 						variant="contained"
-						onClick={logout}
+						onClick={() => {
+							logout();
+							setTimeout(() => {
+								handleExit();
+							}, 1000);
+						}}
 						style={{ outline: "none" }}
 					>
 						<ExitToAppIcon />
-					</IconButton>
+					</IconButton> */}
 				</Toolbar>
 			</AppBar>
 			<Drawer
@@ -207,7 +218,7 @@ export default function Dashboard() {
 				</div>
 				<Divider />
 				<List>
-					<MainListItems />
+					<MainListItems openacc={openacc} />
 				</List>
 			</Drawer>
 			<main className={classes.content}>
@@ -221,19 +232,41 @@ export default function Dashboard() {
 							justifyContent: "center",
 						}}
 					>
-						<Router style={{ width: "100%" }}>
-							<Display
-								alertdata={alertdata}
-								setAlertdata={setAlertdata}
-								ipUrl={ipUrl}
-								setIpUrl={setIpUrl}
-								hostid={hostid}
-								setHostid={setHostid}
-								host={host}
-								setHost={setHost}
-								path="dashboard"
-							/>
-							<Chart path="graph" />
+						{!openacc ? (
+							<Router style={{ width: "100%" }}>
+								<Display
+									alertdata={alertdata}
+									setAlertdata={setAlertdata}
+									ipUrl={ipUrl}
+									setIpUrl={setIpUrl}
+									hostid={hostid}
+									setHostid={setHostid}
+									host={host}
+									setHost={setHost}
+									path="dashboard"
+								/>
+							</Router>
+						) : (
+							<Router>
+								<Protected path="dashboard" />
+							</Router>
+						)}
+						{!openacc ? (
+							<Router
+								style={{ width: "100%", paddingTop: "100px" }}
+							>
+								<Chart path="graph" />
+							</Router>
+						) : (
+							<Router>
+								<Protected path="graph" />
+							</Router>
+						)}
+
+						<Router style={{ width: "100%", paddingTop: "50px" }}>
+							<Register path="register" />
+							<Login path="/" setOpenacc={setOpenacc} />
+							{/* <Account path="account" /> */}
 						</Router>
 					</Grid>
 				</Container>
@@ -246,13 +279,9 @@ export default function Dashboard() {
 							display: "flex",
 							justifyContent: "center",
 						}}
-					>
-						<Router style={{ width: "100%" }}>
-							<Register path="register" />
-						</Router>
-					</Grid>
+					></Grid>
 				</Container>
-				<Container maxWidth="lg" className={fixedHeightPaper}>
+				{/* <Container maxWidth="lg" className={fixedHeightPaper}>
 					<Grid
 						container
 						spacing={1}
@@ -266,11 +295,8 @@ export default function Dashboard() {
 							<Account path="account" />
 						</Router>
 					</Grid>
-				</Container>
+				</Container> */}
 			</main>
 		</div>
 	);
-	async function logout() {
-		await firebase.logout();
-	}
 }

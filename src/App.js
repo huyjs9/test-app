@@ -2,7 +2,7 @@ import "./App.css";
 import "./styles.css";
 import React, { useState, useEffect } from "react";
 import firebase from "./firebase";
-import Post from "./Post";
+
 import Dashboard from "./Dashboard/Dashboard";
 import localIpUrl from "local-ip-url";
 import TextField from "./Dashboard/TextField";
@@ -16,7 +16,7 @@ import { Router, Link } from "@reach/router";
 import { makeStyles } from "@material-ui/core/styles";
 import Display from "./Dashboard/Display";
 import { textAlign } from "@material-ui/system";
-import Graph from "./Dashboard/Graph";
+import { ContainerNew, Wrapper } from "./styles/App.styled";
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -33,24 +33,38 @@ function App() {
 	const [display, setDisplay] = useState(true);
 	const [firebaseInitialized, setFirebaseInitialized] = useState(false);
 	const [value, setValue] = useState();
+
 	const handleDisplay = () => {
 		setDisplay(!display);
 	};
-	// useEffect(() => {
-	// 	firebase.isInitialized().then((val) => {
-	// 		setFirebaseInitialized(val);
-	// 	});
-	// });
+	useEffect(() => {
+		firebase.isInitialized().then((val) => {
+			setFirebaseInitialized(val);
+		});
+	});
+	if (firebaseInitialized === false) {
+		console.log("true");
+	} else {
+		console.log("false");
+	}
 
-	return (
-		<div>
-			<Dashboard></Dashboard>
-			<p className="App">
-				{/* <TextField></TextField>
+	return firebaseInitialized !== false ? (
+		<ContainerNew>
+			<Wrapper>
+				<div>
+					<Dashboard></Dashboard>
+					<p className="App">
+						{/* <TextField></TextField>
 				<Button data={handleDisplay} ip={aa}></Button>
 				<Deposits></Deposits> */}
-				{/* {display === false && <p className="App">url: {data}</p>} */}
-			</p>
+						{/* {display === false && <p className="App">url: {data}</p>} */}
+					</p>
+				</div>
+			</Wrapper>
+		</ContainerNew>
+	) : (
+		<div id="loader">
+			<CircularProgress />
 		</div>
 	);
 }

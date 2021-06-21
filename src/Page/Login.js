@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik } from "formik";
 import * as EmailValidator from "email-validator";
 import {
@@ -10,6 +10,8 @@ import {
 	Grid,
 	Avatar,
 	Card,
+	Grow,
+	Zoom,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
@@ -40,7 +42,19 @@ const useStyles = makeStyles((theme) => ({
 
 const ValidatedLoginForm = (props) => {
 	const classes = useStyles();
+	const { setOpenacc } = props;
 	const navigate = useNavigate();
+	const [emailtest, setEmailtest] = useState("");
+	const [passwordtest, setPasswordtest] = useState("");
+	const [checked, setChecked] = useState(false);
+
+	useEffect(() => {
+		if (passwordtest) {
+			console.log("emailne", emailtest);
+			login();
+		}
+		setChecked(true);
+	}, [passwordtest, emailtest, login]);
 
 	return (
 		<Container maxWidth="xs" component="main">
@@ -64,11 +78,10 @@ const ValidatedLoginForm = (props) => {
 				}}
 				onSubmit={(values, { setSubmitting }) => {
 					const { email, password } = values;
-					// login(email, password);
-					firebase.login(email, password);
-					navigate("/dashboard", { replace: true });
+					setEmailtest(email);
+					setPasswordtest(password);
 					setTimeout(() => {
-						alert("Log in success!", values);
+						// alert("Log in success!", values);
 						setSubmitting(false);
 					}, 500);
 				}}
@@ -82,98 +95,109 @@ const ValidatedLoginForm = (props) => {
 					handleBlur,
 					handleSubmit,
 				}) => (
-					<Card className={classes.paper}>
-						<Avatar className={classes.avatar}>
-							<LockOutlinedIcon />
-						</Avatar>
-						<Box sx={{ mb: 3 }}>
-							<Typography color="textPrimary" variant="h3">
-								Sign in
-							</Typography>
-							<Typography
-								color="textSecondary"
-								gutterBottom
-								variant="body2"
-							></Typography>
-						</Box>
-						<form onSubmit={handleSubmit} className={classes.form}>
-							<TextField
-								error={Boolean(touched.email && errors.email)}
-								fullWidth
-								helperText={touched.email && errors.email}
-								label="Email Address"
-								margin="normal"
-								name="email"
-								onBlur={handleBlur}
-								onChange={handleChange}
-								type="email"
-								value={values.email}
-								variant="outlined"
-								className={
-									errors.email && touched.email && "error"
-								}
-							/>
-
-							<TextField
-								error={Boolean(
-									touched.password && errors.password
-								)}
-								fullWidth
-								helperText={touched.password && errors.password}
-								label="Password"
-								margin="normal"
-								name="password"
-								onBlur={handleBlur}
-								onChange={handleChange}
-								type="password"
-								value={values.password}
-								variant="outlined"
-								className={
-									errors.password &&
-									touched.password &&
-									"error"
-								}
-							/>
-							<Box sx={{ py: 2 }}>
-								<Button
-									color="primary"
-									disabled={isSubmitting}
-									fullWidth
-									size="large"
-									type="submit"
-									variant="contained"
-									className={classes.submit}
-								>
-									Sign in now
-								</Button>
+					<Zoom in={checked} {...(checked ? { timeout: 1000 } : {})}>
+						<Card className={classes.paper}>
+							<Avatar className={classes.avatar}>
+								<LockOutlinedIcon />
+							</Avatar>
+							<Box sx={{ mb: 3 }}>
+								<Typography color="textPrimary" variant="h3">
+									Sign in
+								</Typography>
+								<Typography
+									color="textSecondary"
+									gutterBottom
+									variant="body2"
+								></Typography>
 							</Box>
-							<Grid container justify="flex-end">
-								<Grid item>
-									<Typography
-										color="textSecondary"
-										variant="body1"
+							<form
+								onSubmit={handleSubmit}
+								className={classes.form}
+							>
+								<TextField
+									error={Boolean(
+										touched.email && errors.email
+									)}
+									fullWidth
+									helperText={touched.email && errors.email}
+									label="Email Address"
+									margin="normal"
+									name="email"
+									onBlur={handleBlur}
+									onChange={handleChange}
+									type="email"
+									value={values.email}
+									variant="outlined"
+									className={
+										errors.email && touched.email && "error"
+									}
+								/>
+
+								<TextField
+									error={Boolean(
+										touched.password && errors.password
+									)}
+									fullWidth
+									helperText={
+										touched.password && errors.password
+									}
+									label="Password"
+									margin="normal"
+									name="password"
+									onBlur={handleBlur}
+									onChange={handleChange}
+									type="password"
+									value={values.password}
+									variant="outlined"
+									className={
+										errors.password &&
+										touched.password &&
+										"error"
+									}
+								/>
+								<Box sx={{ py: 2 }}>
+									<Button
+										color="primary"
+										disabled={isSubmitting}
+										fullWidth
+										size="large"
+										type="submit"
+										variant="contained"
+										className={classes.submit}
 									>
-										Don't have an account?{" "}
-										<Link
-											// component={RouterLink}
-											to="/register"
-											variant="body6"
+										Sign in now
+									</Button>
+								</Box>
+								<Grid container justify="flex-end">
+									<Grid item>
+										<Typography
+											color="textSecondary"
+											variant="body1"
 										>
-											Sign up
-										</Link>
-									</Typography>
+											Don't have an account?{" "}
+											<Link
+												// component={RouterLink}
+												to="/register"
+												variant="body6"
+											>
+												Sign up
+											</Link>
+										</Typography>
+									</Grid>
 								</Grid>
-							</Grid>
-						</form>
-					</Card>
+							</form>
+						</Card>
+					</Zoom>
 				)}
 			</Formik>
 		</Container>
 	);
 	async function login() {
 		try {
-			await firebase.login();
-			props.history.push("dashboard");
+			await firebase.login(emailtest, passwordtest);
+			// alert("Log in success!");
+			setOpenacc(false);
+			navigate("/dashboard", { replace: true });
 		} catch (error) {
 			alert(error.message);
 		}

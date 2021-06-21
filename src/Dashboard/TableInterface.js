@@ -59,11 +59,11 @@ export default function TableInterface(props) {
 			<Table size="small" className={classes.seeMore}>
 				<TableHead>
 					<TableRow>
-						<TableCell width="5%">Index</TableCell>
-						<TableCell width="30%">Description</TableCell>
-						<TableCell width="15%">Status</TableCell>
-						<TableCell width="10%">Bits Recieved (bps)</TableCell>
-						<TableCell width="10%">Bits Sent (bps)</TableCell>
+						<TableCell width="2%">Index</TableCell>
+						<TableCell width="40%">Description</TableCell>
+						<TableCell width="20%">Status</TableCell>
+						<TableCell width="20%">Bits Recieved (bps)</TableCell>
+						<TableCell width="20%">Bits Sent (bps)</TableCell>
 						<TableCell align="right">Speed (Mbps)</TableCell>
 					</TableRow>
 				</TableHead>
@@ -74,7 +74,7 @@ export default function TableInterface(props) {
 							<TableCell width="40%">
 								{item.description}
 							</TableCell>
-							<TableCell width="10%">
+							<TableCell width="20%">
 								{item.status <= 1 ? (
 									<Box
 										color="success.main"

@@ -88,14 +88,12 @@ export default function Items(props) {
 	// },[itemdata])
 	return (
 		<React.Fragment>
-			<Table size="small" className={classes.seeMore}>
+			<Table size="small">
 				<TableHead>
 					<TableRow>
-						<StyledTableCell width="15%">
-							Item Index
-						</StyledTableCell>
-						<StyledTableCell>Name</StyledTableCell>
-						<StyledTableCell align="right">Current</StyledTableCell>
+						<TableCell width="15%">Item Index</TableCell>
+						<TableCell>Name</TableCell>
+						<TableCell align="right">Current</TableCell>
 						{/* <TableCell width="15%">Item Index</TableCell>
 						<TableCell>Name</TableCell>
 						<TableCell align="right">Current</TableCell> */}
@@ -116,48 +114,6 @@ export default function Items(props) {
 									{item.units}
 								</StyledTableCell>
 							</StyledTableRow>
-							// <TableRow key={item.itemid}>
-							// 	<TableCell>{item.itemid} </TableCell>
-							// 	<TableCell>{item.name} </TableCell>
-							// 	<TableCell align="right">
-							// 		{item.lastvalue}
-							// 		{item.units}
-							// 	</TableCell>
-							// </TableRow>
-							// <Box  key={item.itemid} style={{ marginTop: 16 }}>
-							// 	{" "}
-							// 	<Box
-							// 		fontWeight="fontWeightBold"
-							// 		display="inline-block"
-							// 		width="15%"
-							// 	>
-							// 		{/* <Link
-							// 			onClick={() => {
-							// 				alert(item.itemid);
-							// 			}}
-							// 		> */}
-							// 		Itemid: {item.itemid}
-							// 	</Box>
-							// 	<Box
-							// 		fontWeight="fontWeightLight"
-							// 		display="inline-block"
-							// 		width="50%"
-							// 	>
-							// 		Name: {item.name}
-							// 	</Box>
-							// 	<Box
-							// 		fontWeight="fontWeightLight"
-							// 		display="inline-block"
-							// 	>
-							// 		Lastvalue: {item.lastvalue}
-							// 	</Box>
-							// 	<Box
-							// 		fontWeight="fontWeightLight"
-							// 		display="inline-block"
-							// 	>
-							// 		{item.units}
-							// 	</Box>
-							// </Box>
 						))}
 				</TableBody>
 			</Table>

@@ -219,23 +219,7 @@ export default function Notifications(props) {
 		}
 	}
 
-	// let arr = [{ ...sixmessages }];
-	// console.log("lenght mess", sixmessages.length);
-	// console.log("message", sixmessages);
-	// console.log("arr", arr);
-
 	//Handle sắp xếp lại message
-
-	const options = [
-		<Alert severity="error">This is an error alert — check it out!</Alert>,
-		<Alert severity="warning">
-			This is a warning alert — check it out!
-		</Alert>,
-		<Alert severity="info">This is an info alert — check it out!</Alert>,
-		<Alert severity="success">
-			This is a success alert — check it out!
-		</Alert>,
-	];
 
 	useEffect(() => {
 		setNum(alertdata.length);
@@ -301,7 +285,17 @@ export default function Notifications(props) {
 								}}
 								// onClick={(event) => handleMenuItemClick(event, index)}
 							>
-								{item}
+								<div
+									style={{ width: 500, whiteSpace: "nowrap" }}
+								>
+									<Box
+										component="div"
+										textOverflow="ellipsis"
+										overflow="hidden"
+									>
+										{item}
+									</Box>
+								</div>
 							</MenuItem>
 						))}
 						<Divider />

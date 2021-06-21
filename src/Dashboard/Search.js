@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+import { Box } from "@material-ui/core";
 import SearchBar from "material-ui-search-bar";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
 		display: "flex",
 		flexWrap: "wrap",
-		width: 290,
 	},
 }));
 
@@ -37,17 +36,18 @@ export default function Search(props) {
 
 	return (
 		<div className={classes.root}>
-			<SearchBar
-				placeholder="Search for..."
-				style={{ margin: 6, width: "300px" }}
-				value={searched}
-				onChange={(searchVal) => requestSearch(searchVal)}
-				onRequestSearch={(searchVal) => requestSearch(searchVal)}
-				onCancelSearch={() => cancelSearch()}
-
-				// onChange={handleChange}
-			></SearchBar>
-			
+			<Box boxShadow={3}>
+				<SearchBar
+					placeholder="Search for..."
+					style={{ width: "auto", height: "35px" }}
+					value={searched}
+					onChange={(searchVal) => requestSearch(searchVal)}
+					onRequestSearch={(searchVal) => requestSearch(searchVal)}
+					onCancelSearch={() => cancelSearch()}
+					variant="outline"
+					// onChange={handleChange}
+				></SearchBar>
+			</Box>
 		</div>
 	);
 }

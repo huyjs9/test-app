@@ -1,4 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import "../App.css";
+import "../styles/hidescroll.css";
 import {
 	Box,
 	Card,
@@ -10,16 +12,9 @@ import {
 	Typography,
 	IconButton,
 	Divider,
+	Hidden,
 } from "@material-ui/core";
-import {
-	MDBCard,
-	MDBCardBody,
-	MDBIcon,
-	MDBRow,
-	MDBCol,
-	MDBCardText,
-} from "mdbreact";
-import RefreshIcon from "@material-ui/icons/Refresh";
+import { MDBCard, MDBCardBody, MDBIcon } from "mdbreact";
 import "../styles/cardsession.css";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
@@ -39,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
 		paddingTop: theme.spacing(1),
 	},
 	appBarSpacer: theme.mixins.toolbar,
+
 	content: {
 		flexGrow: 1,
 		height: "100vh",
@@ -65,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 		display: "flex",
 		overflow: "auto",
 		maxWidth: "100%",
-		maxHeight: "300px",
+		maxHeight: "420px",
 		flexDirection: "column",
 	},
 	paperdevice: {
@@ -82,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection: "column",
 	},
 	fixedHeight: {
-		height: 150,
+		height: 420,
 	},
 	divider: {
 		// Theme Color, or use css color in quote
@@ -91,13 +87,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 const StyledBox = withStyles({
 	root: {
-		background: "linear-gradient(45deg, #FE88A2 30%, #FFA475 90%)",
+		// background: "linear-gradient(45deg, #FE88A2 30%, #FFA475 90%)",
 		// borderRadius: 3,
 		border: 0,
 		color: "black",
 		// height: 48,
 		// padding: "0 30px",
-		boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
 	},
 	label: {
 		textTransform: "capitalize",
@@ -127,6 +122,7 @@ export default function Display(props) {
 	const [searched, setSearched] = useState(""); //Truyền cho Search để search table
 	const [rows, setRows] = useState(itemdata);
 	const [prevHost, setprevHost] = useState([]);
+	const [firebaseInitialized, setFirebaseInitialized] = useState(false);
 
 	const handlePush = () => {
 		setPushit(false); //Truyền cho Button để thực hiện nhấn nút
@@ -214,9 +210,11 @@ export default function Display(props) {
 			<main className={classes.content}>
 				<div className={classes.appBarSpacer} />
 				<Container maxWidth="lg" className={classes.container}>
-					<Grid container spacing={2}>
+					<Grid container spacing={1} className="example">
 						{/* Get Information */}
+
 						<Grid item xs={12} md={4} lg={4}>
+							{" "}
 							<MDBCard
 								className="cascading-admin-card"
 								style={{ height: "230px" }}
@@ -235,7 +233,9 @@ export default function Display(props) {
 										</h5>
 										<Divider
 											variant="inset"
-											classes={{ root: classes.divider }}
+											classes={{
+												root: classes.divider,
+											}}
 										/>
 									</div>
 								</div>
@@ -278,6 +278,7 @@ export default function Display(props) {
 								/>
 							</Paper> */}
 						</Grid>
+
 						{/* Display */}
 						<Grid item xs={12} md={4} lg={8}>
 							<MDBCard
@@ -298,13 +299,15 @@ export default function Display(props) {
 										</h5>
 										<Divider
 											variant="inset"
-											classes={{ root: classes.divider }}
+											classes={{
+												root: classes.divider,
+											}}
 										/>
 									</div>
 								</div>
 								<MDBCardBody style={{ overflow: "auto" }}>
-									{/* Nho sua lai */}
-									{Pushit === false && ipUrl && (
+									{/* Thay Pushit bằng host */}
+									{host && ipUrl && (
 										<Hosts
 											host={host}
 											hostid={hostid}
@@ -320,31 +323,23 @@ export default function Display(props) {
 								</MDBCardBody>
 							</MDBCard>
 						</Grid>
+
 						<Grid item xs={12}>
-							<MDBCard
-								className="cascading-admin-card"
-								style={{ height: "420px" }}
-							>
-								<StyledBox>
-									{" "}
-									<div className="admin-up">
-										<div className="data">
-											<Box>
-												<h5>
-													<strong>ITEM LIST</strong>
-												</h5>
-											</Box>
-										</div>
-									</div>
-								</StyledBox>
-								<StyledBox>
-									{" "}
+							{/* <MDBCard className="cascading-admin-card">
+								<Box
+									style={{
+										paddingTop: "20px",
+										paddingBottom: "20px",
+									}}
+									display="flex"
+								>
 									<Box
 										style={{
 											paddingLeft: "20px",
-											paddingBottom: "10px",
 										}}
 										display="inline-block"
+										flexWrap="wrap"
+										flexGrow={1}
 									>
 										<Search
 											itemdata={itemdata}
@@ -353,28 +348,52 @@ export default function Display(props) {
 											setRows={setRows}
 										/>
 									</Box>
-									<Box display="inline-block">
-										<IconButton
-											aria-label="delete"
-											component="span"
-										>
-											<RefreshIcon fontSize="large" />
-										</IconButton>
+									<Box
+										style={{ paddingRight: "20px" }}
+										display="inline-block"
+										flexWrap="wrap"
+										fontSize="h6.fontSize"
+										fontWeight="fontWeightBold"
+									>
+										ITEM LIST
 									</Box>
-									<Divider
-										variant="full"
-										classes={{ root: classes.divider }}
-									/>
-								</StyledBox>
+								</Box>
+							</MDBCard> */}
 
-								<MDBCardBody style={{ overflow: "auto" }}>
-									<Items
-										itemdata={rows}
-										ipUrl={ipUrl}
-										hostid={hostid}
-										setItemdata={setItemdata}
+							<Box
+								style={{
+									paddingTop: "10px",
+									paddingBottom: "10px",
+								}}
+								display="flex"
+							>
+								<Box display="inline-block" flexGrow={1}>
+									<Search
+										itemdata={itemdata}
+										searched={searched}
+										setSearched={setSearched}
+										setRows={setRows}
 									/>
-									{/* {hostid && ipUrl && (
+								</Box>
+								<Box
+									style={{ paddingRight: "20px" }}
+									display="inline-block"
+									flexWrap="wrap"
+									fontSize="h6.fontSize"
+									fontWeight="fontWeightBold"
+								>
+									ITEMS LIST
+								</Box>
+							</Box>
+
+							<MDBCard className={classes.paper}>
+								<Items
+									itemdata={rows}
+									ipUrl={ipUrl}
+									hostid={hostid}
+									setItemdata={setItemdata}
+								/>
+								{/* {hostid && ipUrl && (
 										<Devices
 											itemdata={itemdata}
 											ipUrl={ipUrl}
@@ -382,24 +401,29 @@ export default function Display(props) {
 											setItemdata={setItemdata}
 										/>
 									)} */}
-								</MDBCardBody>
 							</MDBCard>
-							{/* <Paper className={classes.paper}>
-								{hostid && ipUrl && (
-									<Devices
-										itemdata={itemdata}
-										ipUrl={ipUrl}
-										hostid={hostid}
-										setItemdata={setItemdata}
-									/>
-								)}
-							</Paper> */}
 						</Grid>
+
 						{/* Devices */}
 						<Grid item xs={12}>
-							<Card>
+							{" "}
+							<Box
+								style={{
+									paddingTop: "10px",
+									paddingBottom: "10px",
+									paddingRight: "20px",
+								}}
+								display="flex"
+								flexWrap="wrap"
+								fontSize="h6.fontSize"
+								fontWeight="fontWeightBold"
+								justifyContent="flex-end"
+							>
+								INTERFACES LIST
+							</Box>
+							<MDBCard className={classes.paper}>
 								<TableInterface itemdata={itemdata} />
-							</Card>
+							</MDBCard>
 						</Grid>
 						{/* <Grid item xs={12}>
 							<Card>

@@ -14,8 +14,9 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.background.paper,
 	},
 }));
-export default function MainListItems() {
+export default function MainListItems(props) {
 	const classes = useStyles();
+	const { openacc } = props;
 
 	return (
 		<div className={classes.root}>
@@ -38,7 +39,7 @@ export default function MainListItems() {
 					<ListItemText primary="Graph" />
 				</ListItem>
 			</Link>
-			<Link
+			{/* <Link
 				to="account"
 				style={{ textDecoration: "none", color: "#000" }}
 			>
@@ -48,26 +49,17 @@ export default function MainListItems() {
 					</ListItemIcon>
 					<ListItemText primary="Account" />
 				</ListItem>
-			</Link>
-			<Link to="/" style={{ textDecoration: "none", color: "#000" }}>
-				<ListItem button component="nav">
-					<ListItemIcon>
-						<LockOpenIcon />
-					</ListItemIcon>
-					<ListItemText primary="Login" />
-				</ListItem>
-			</Link>
-			<Link
-				to="register"
-				style={{ textDecoration: "none", color: "#000" }}
-			>
-				<ListItem button component="nav">
-					<ListItemIcon>
-						<PersonAddIcon />
-					</ListItemIcon>
-					<ListItemText primary="Register" />
-				</ListItem>
-			</Link>
+			</Link> */}
+			{openacc && (
+				<Link to="/" style={{ textDecoration: "none", color: "#000" }}>
+					<ListItem button component="nav">
+						<ListItemIcon>
+							<LockOpenIcon />
+						</ListItemIcon>
+						<ListItemText primary="Login/Register" />
+					</ListItem>
+				</Link>
+			)}
 		</div>
 	);
 }

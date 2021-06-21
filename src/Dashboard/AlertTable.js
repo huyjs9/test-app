@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
 	Table,
@@ -9,8 +9,6 @@ import {
 	TableRow,
 } from "@material-ui/core";
 import axios from "axios";
-import { setIn } from "formik";
-import { StraightenSharp } from "@material-ui/icons";
 
 const useStyles = makeStyles({
 	depositContext: {
@@ -22,7 +20,7 @@ const useStyles = makeStyles({
 });
 
 export default function AlertTable(props) {
-	const classes = useStyles();
+	// const classes = useStyles();
 	const { alertdata, ipUrl, setAlertdata, host } = props;
 	const fakeData = alertdata; //Nhận dữ liệu mảng Item đã lưu để mapping
 	const test = alertdata;
