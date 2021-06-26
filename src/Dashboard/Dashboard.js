@@ -130,6 +130,7 @@ export default function Dashboard() {
 	const [host, setHost] = useState([]); //Truyền cho Button để lưu dữ liệu Host
 	const [open, setOpen] = useState(true);
 	const [openacc, setOpenacc] = useState(true);
+	const [select, setSelect] = useState(0);
 
 	const handleExit = () => {
 		navigate("/", { replace: true });
@@ -218,7 +219,14 @@ export default function Dashboard() {
 				</div>
 				<Divider />
 				<List>
-					<MainListItems openacc={openacc} />
+					<MainListItems
+						openacc={openacc}
+						select={select}
+						setSelect={setSelect}
+						hostid={hostid}
+						ipUrl={ipUrl}
+						host={host}
+					/>
 				</List>
 			</Drawer>
 			<main className={classes.content}>
@@ -251,17 +259,25 @@ export default function Dashboard() {
 								<Protected path="dashboard" />
 							</Router>
 						)}
-						{!openacc ? (
+						{/* {!openacc ? (
 							<Router
-								style={{ width: "100%", paddingTop: "100px" }}
+								style={{
+									width: "100%",
+									paddingTop: "100px",
+								}}
 							>
-								<Chart path="graph" />
+								<Chart
+									hostid={hostid}
+									ipUrl={ipUrl}
+									select={select}
+									path="graph"
+								/>
 							</Router>
 						) : (
 							<Router>
 								<Protected path="graph" />
 							</Router>
-						)}
+						)} */}
 
 						<Router style={{ width: "100%", paddingTop: "50px" }}>
 							<Register path="register" />
