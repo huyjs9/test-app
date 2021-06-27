@@ -123,7 +123,10 @@ export default function MainListItems(props) {
 	for (let i = 0; i < data.length; i++) {
 		for (let y = 0; y < arrtest.length; y++) {
 			if (arrtest[y].name.includes(data[i].name)) {
-				serieslable.push(arrtest[y].lable);
+				serieslable.push(
+					arrtest[y].lable.replace("Memory utilization", "") &&
+						arrtest[y].lable.replace(": Memory utilization", "")
+				);
 				seriesvalue.push(
 					parseInt(parseFloat(arrtest[y].value).toFixed(1))
 				);
@@ -133,6 +136,7 @@ export default function MainListItems(props) {
 			}
 		}
 	}
+	console.log("lable", serieslable);
 	// console.log("value nay la so gi", seriesvalue);
 
 	//Tách ra theo cặp 2
@@ -217,7 +221,11 @@ export default function MainListItems(props) {
 				{sepratevalue.map((item, index) => (
 					<Box display="flex" key={index}>
 						<Box>
-							<Chart series={item} title={arrtest[index].name} />
+							<Chart
+								series={item}
+								title={arrtest[index].name}
+								subtitle={serieslable[index]}
+							/>
 						</Box>
 					</Box>
 				))}

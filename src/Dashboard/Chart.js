@@ -12,8 +12,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function PieChart(props) {
 	const classes = useStyles();
-	const { series, title } = props;
-	console.log("title", title);
+	const { series, title, subtitle } = props;
 
 	const options = {
 		series: series,
@@ -25,6 +24,21 @@ export default function PieChart(props) {
 			labels: ["Used Memory", "Free Memory"],
 			title: {
 				text: title,
+				align: "left",
+			},
+			subtitle: {
+				text: subtitle,
+				align: "left",
+				margin: 10,
+				offsetX: 5,
+				offsetY: 20,
+				floating: false,
+				style: {
+					fontSize: "12px",
+					fontWeight: "normal",
+					fontFamily: undefined,
+					color: "#9699a2",
+				},
 			},
 			responsive: [
 				{
