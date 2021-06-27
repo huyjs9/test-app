@@ -92,56 +92,121 @@ export default function MainListItems(props) {
 			}
 		);
 		setChartx(chartData.data.result); //Lưu dữ liệu mảng Chart
-	}, []);
+	}, [host]);
 	console.log("chart", chartx);
-
-	let arrtest = [];
+	let arrtestserver = [];
+	let arrtestrouter = [];
 	for (let i = 0; i < data.length; i++) {
 		for (let y = 0; y < chartx.length; y++) {
 			let objtest = {};
-			if (
-				chartx[y].hostid.includes(data[i].hostid) &&
-				chartx[y].name.includes("Available memory in %")
-			) {
-				objtest["name"] = data[i].name;
-				objtest["lable"] = chartx[y].name;
-				objtest["value"] = chartx[y].lastvalue;
-				objtest["units"] = chartx[y].units;
-				arrtest.push(objtest);
+			//Hanle cho server
+			if (data[i].name.includes("server")) {
+				if (
+					chartx[y].hostid.includes(data[i].hostid) &&
+					chartx[y].name.includes("Available memory in %")
+				) {
+					objtest["name"] = data[i].name;
+					objtest["lable"] = chartx[y].name;
+					objtest["value"] = chartx[y].lastvalue;
+					objtest["units"] = chartx[y].units;
+					arrtestserver.push(objtest);
+				}
+
+				if (
+					chartx[y].hostid.includes(data[i].hostid) &&
+					chartx[y].name.includes("Total memory")
+				) {
+					objtest["name"] = data[i].name;
+					objtest["lable"] = chartx[y].name;
+					objtest["value"] = chartx[y].lastvalue;
+					objtest["units"] = chartx[y].units;
+					arrtestserver.push(objtest);
+				}
+				if (
+					chartx[y].hostid.includes(data[i].hostid) &&
+					chartx[y].name.includes("Used memory")
+				) {
+					objtest["name"] = data[i].name;
+					objtest["lable"] = chartx[y].name;
+					objtest["value"] = chartx[y].lastvalue;
+					objtest["units"] = chartx[y].units;
+					arrtestserver.push(objtest);
+				}
 			}
-			if (
-				chartx[y].hostid.includes(data[i].hostid) &&
-				chartx[y].name.includes("Free memory")
-			) {
-				objtest["name"] = data[i].name;
-				objtest["lable"] = chartx[y].name;
-				objtest["value"] = chartx[y].lastvalue;
-				objtest["units"] = chartx[y].units;
-				arrtest.push(objtest);
-			}
-			if (
-				chartx[y].hostid.includes(data[i].hostid) &&
-				chartx[y].name.includes("Total memory")
-			) {
-				objtest["name"] = data[i].name;
-				objtest["lable"] = chartx[y].name;
-				objtest["value"] = chartx[y].lastvalue;
-				objtest["units"] = chartx[y].units;
-				arrtest.push(objtest);
-			}
-			if (
-				chartx[y].hostid.includes(data[i].hostid) &&
-				chartx[y].name.includes("Used memory")
-			) {
-				objtest["name"] = data[i].name;
-				objtest["lable"] = chartx[y].name;
-				objtest["value"] = chartx[y].lastvalue;
-				objtest["units"] = chartx[y].units;
-				arrtest.push(objtest);
+			//Handle cho router, switch
+			if (!data[i].name.includes("server")) {
+				if (
+					chartx[y].hostid.includes(data[i].hostid) &&
+					chartx[y].name.includes("Free memory")
+				) {
+					objtest["name"] = data[i].name;
+					objtest["lable"] = chartx[y].name;
+					objtest["value"] = chartx[y].lastvalue;
+					objtest["units"] = chartx[y].units;
+					arrtestrouter.push(objtest);
+				}
+				if (
+					chartx[y].hostid.includes(data[i].hostid) &&
+					chartx[y].name.includes("Used memory")
+				) {
+					objtest["name"] = data[i].name;
+					objtest["lable"] = chartx[y].name;
+					objtest["value"] = chartx[y].lastvalue;
+					objtest["units"] = chartx[y].units;
+					arrtestrouter.push(objtest);
+				}
 			}
 		}
 	}
-	console.log("dung me no roi", arrtest);
+	console.log("server", arrtestserver);
+	console.log("router", arrtestrouter);
+	//Lẩy mảng cho tổng lable với value series
+	let serieslable = [];
+	let seriesvalue = [];
+	for (let i = 0; i < data.length; i++) {
+		for (let y = 0; y < arrtestrouter.length; y += 2) {
+			if (arrtestrouter[y].name.includes(data[i].name)) {
+				serieslable.push(arrtestrouter[y].lable);
+				seriesvalue.push(
+					parseInt(parseFloat(arrtestrouter[y].value)).toFixed(1)
+				);
+			}
+		}
+	}
+	//Tính % ở đây
+	let percent = [];
+	if (seriesvalue && seriesvalue.length > 0) {
+		for (let i = 0; i < seriesvalue; i += 2) {
+			let a = parseInt(parseFloat(seriesvalue[i]).toFixed(1));
+			let b = parseInt(parseFloat(seriesvalue[i + 1]).toFixed(1));
+			percent.push((a / (a + b)) * 100);
+			// percent.push(
+			// 	(seriesvalue[i] / (seriesvalue[i] + seriesvalue[i + 1])) * 100
+			// );
+		}
+	}
+	console.log("phan tram router", percent);
+
+	//Handle riêng cho zabbix server
+	// if (arrtestserver && arrtestserver.length > 0) {
+	// 	serieslable.push(arrtestserver[0].lable);
+	// 	serieslable.push(arrtestserver[1].lable);
+	// 	seriesvalue.push(arrtestserver[0].value);
+	// 	seriesvalue.push(arrtestserver[1].value);
+	// }
+
+	//Tách ra theo cặp 2
+	let sepratelable = [];
+	let sepratevalue = [];
+
+	for (let i = 0; i < serieslable.length; i += 2) {
+		sepratelable.push(serieslable.slice(i, i + 2));
+		sepratevalue.push(seriesvalue.slice(i, i + 2));
+	}
+	console.log("lable ne", sepratelable);
+	console.log("value ne", sepratevalue);
+
+	//Test dưới đây
 	let arr = [];
 
 	for (let i = 0; i < chartx.length; i++) {
@@ -183,6 +248,7 @@ export default function MainListItems(props) {
 		console.log("khong");
 	}
 	console.log("du lieu ne", series);
+	//----------------------------//
 
 	return (
 		<div className={classes.root}>
