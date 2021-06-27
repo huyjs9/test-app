@@ -23,6 +23,7 @@ import {
 	Typography,
 	Slide,
 	Box,
+	Grid,
 } from "@material-ui/core";
 import axios from "axios";
 import Chart from "./Chart";
@@ -217,19 +218,17 @@ export default function MainListItems(props) {
 						</Typography>
 					</Toolbar>
 				</AppBar>
-
-				{sepratevalue.map((item, index) => (
-					<Box display="flex" key={index}>
-						<Box>
+				<Box display="flex" p={1}>
+					{sepratevalue.map((item, index) => (
+						<Box width="50%">
 							<Chart
 								series={item}
 								title={arrtest[index].name}
 								subtitle={serieslable[index]}
 							/>
 						</Box>
-					</Box>
-				))}
-
+					))}
+				</Box>
 				{/* <List>
 					<ListItem button>
 						<ListItemText

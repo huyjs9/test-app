@@ -53,7 +53,7 @@ export default function PieChart(props) {
 					},
 				},
 			],
-			colors: ["#4caf50", "#F44336"],
+			colors: ["#f44336", "#4caf50"],
 		},
 	};
 	return (
