@@ -24,6 +24,7 @@ import {
 	Slide,
 	Box,
 	Grid,
+	Container,
 } from "@material-ui/core";
 import axios from "axios";
 import Chart from "./Chart";
@@ -38,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		marginLeft: theme.spacing(2),
 		flex: 1,
+	},
+	container: {
+		overflow: "auto",
 	},
 }));
 
@@ -129,16 +133,16 @@ export default function MainListItems(props) {
 						arrtest[y].lable.replace(": Memory utilization", "")
 				);
 				seriesvalue.push(
-					parseInt(parseFloat(arrtest[y].value).toFixed(1))
+					Number(parseFloat(arrtest[y].value).toFixed(1))
 				);
 				seriesvalue.push(
-					parseInt((100 - parseFloat(arrtest[y].value)).toFixed(1))
+					Number((100 - parseFloat(arrtest[y].value)).toFixed(1))
 				);
 			}
 		}
 	}
 	console.log("lable", serieslable);
-	// console.log("value nay la so gi", seriesvalue);
+	console.log("value nay la so gi", seriesvalue);
 
 	//Tách ra theo cặp 2
 	let sepratevalue = [];
@@ -218,17 +222,21 @@ export default function MainListItems(props) {
 						</Typography>
 					</Toolbar>
 				</AppBar>
-				<Box display="flex" p={1}>
-					{sepratevalue.map((item, index) => (
-						<Box width="50%">
-							<Chart
-								series={item}
-								title={arrtest[index].name}
-								subtitle={serieslable[index]}
-							/>
-						</Box>
-					))}
-				</Box>
+				{/* <Box display="flex" p={1}> */}
+				<Container fixed className={classes.container}>
+					<Grid container>
+						{sepratevalue.map((item, index) => (
+							<Grid xs={6}>
+								<Chart
+									series={item}
+									title={arrtest[index].name}
+									subtitle={serieslable[index]}
+								/>
+							</Grid>
+						))}
+					</Grid>
+				</Container>
+
 				{/* <List>
 					<ListItem button>
 						<ListItemText

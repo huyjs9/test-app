@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 export default function PieChart(props) {
 	const classes = useStyles();
 	const { series, title, subtitle } = props;
-
+	console.log(series);
 	const options = {
 		series: series,
 		options: {
