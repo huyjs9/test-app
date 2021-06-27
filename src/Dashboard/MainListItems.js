@@ -22,6 +22,7 @@ import {
 	IconButton,
 	Typography,
 	Slide,
+	Box,
 } from "@material-ui/core";
 import axios from "axios";
 import Chart from "./Chart";
@@ -65,7 +66,7 @@ export default function MainListItems(props) {
 	for (let i = 0; i < data.length; i++) {
 		hostgroup.push(data[i].hostid);
 	}
-	console.log("host", host);
+
 	useEffect(async () => {
 		const chartData = await axios.post(
 			`http://${ipUrl}/zabbix/api_jsonrpc.php`,
@@ -83,7 +84,7 @@ export default function MainListItems(props) {
 					],
 					hostids: hostgroup,
 					search: {
-						name: "memory",
+						name: "Memory utilization",
 					},
 					sortfield: "name",
 				},
@@ -93,162 +94,53 @@ export default function MainListItems(props) {
 		);
 		setChartx(chartData.data.result); //Lưu dữ liệu mảng Chart
 	}, [host]);
-	console.log("chart", chartx);
-	let arrtestserver = [];
-	let arrtestrouter = [];
+	// console.log("chart", chartx);
+
+	let arrtest = [];
+
 	for (let i = 0; i < data.length; i++) {
 		for (let y = 0; y < chartx.length; y++) {
 			let objtest = {};
-			//Hanle cho server
-			if (data[i].name.includes("server")) {
-				if (
-					chartx[y].hostid.includes(data[i].hostid) &&
-					chartx[y].name.includes("Available memory in %")
-				) {
-					objtest["name"] = data[i].name;
-					objtest["lable"] = chartx[y].name;
-					objtest["value"] = chartx[y].lastvalue;
-					objtest["units"] = chartx[y].units;
-					arrtestserver.push(objtest);
-				}
-
-				if (
-					chartx[y].hostid.includes(data[i].hostid) &&
-					chartx[y].name.includes("Total memory")
-				) {
-					objtest["name"] = data[i].name;
-					objtest["lable"] = chartx[y].name;
-					objtest["value"] = chartx[y].lastvalue;
-					objtest["units"] = chartx[y].units;
-					arrtestserver.push(objtest);
-				}
-				if (
-					chartx[y].hostid.includes(data[i].hostid) &&
-					chartx[y].name.includes("Used memory")
-				) {
-					objtest["name"] = data[i].name;
-					objtest["lable"] = chartx[y].name;
-					objtest["value"] = chartx[y].lastvalue;
-					objtest["units"] = chartx[y].units;
-					arrtestserver.push(objtest);
-				}
-			}
-			//Handle cho router, switch
-			if (!data[i].name.includes("server")) {
-				if (
-					chartx[y].hostid.includes(data[i].hostid) &&
-					chartx[y].name.includes("Free memory")
-				) {
-					objtest["name"] = data[i].name;
-					objtest["lable"] = chartx[y].name;
-					objtest["value"] = chartx[y].lastvalue;
-					objtest["units"] = chartx[y].units;
-					arrtestrouter.push(objtest);
-				}
-				if (
-					chartx[y].hostid.includes(data[i].hostid) &&
-					chartx[y].name.includes("Used memory")
-				) {
-					objtest["name"] = data[i].name;
-					objtest["lable"] = chartx[y].name;
-					objtest["value"] = chartx[y].lastvalue;
-					objtest["units"] = chartx[y].units;
-					arrtestrouter.push(objtest);
-				}
+			//Hanle cho % used memmory
+			if (
+				chartx[y].hostid.includes(data[i].hostid) &&
+				chartx[y].name.includes("Memory utilization")
+			) {
+				objtest["name"] = data[i].name;
+				objtest["lable"] = chartx[y].name;
+				objtest["value"] = chartx[y].lastvalue;
+				objtest["units"] = chartx[y].units;
+				arrtest.push(objtest);
 			}
 		}
 	}
-	console.log("server", arrtestserver);
-	console.log("router", arrtestrouter);
+	console.log("memory", arrtest);
+
+	//Handle cho router
 	//Lẩy mảng cho tổng lable với value series
 	let serieslable = [];
 	let seriesvalue = [];
 	for (let i = 0; i < data.length; i++) {
-		for (let y = 0; y < arrtestrouter.length; y += 2) {
-			if (arrtestrouter[y].name.includes(data[i].name)) {
-				serieslable.push(arrtestrouter[y].lable);
+		for (let y = 0; y < arrtest.length; y++) {
+			if (arrtest[y].name.includes(data[i].name)) {
+				serieslable.push(arrtest[y].lable);
 				seriesvalue.push(
-					parseInt(parseFloat(arrtestrouter[y].value)).toFixed(1)
+					parseInt(parseFloat(arrtest[y].value).toFixed(1))
+				);
+				seriesvalue.push(
+					parseInt((100 - parseFloat(arrtest[y].value)).toFixed(1))
 				);
 			}
 		}
 	}
-	//Tính % ở đây
-	let percent = [];
-	if (seriesvalue && seriesvalue.length > 0) {
-		for (let i = 0; i < seriesvalue; i += 2) {
-			let a = parseInt(parseFloat(seriesvalue[i]).toFixed(1));
-			let b = parseInt(parseFloat(seriesvalue[i + 1]).toFixed(1));
-			percent.push((a / (a + b)) * 100);
-			// percent.push(
-			// 	(seriesvalue[i] / (seriesvalue[i] + seriesvalue[i + 1])) * 100
-			// );
-		}
-	}
-	console.log("phan tram router", percent);
-
-	//Handle riêng cho zabbix server
-	// if (arrtestserver && arrtestserver.length > 0) {
-	// 	serieslable.push(arrtestserver[0].lable);
-	// 	serieslable.push(arrtestserver[1].lable);
-	// 	seriesvalue.push(arrtestserver[0].value);
-	// 	seriesvalue.push(arrtestserver[1].value);
-	// }
+	// console.log("value nay la so gi", seriesvalue);
 
 	//Tách ra theo cặp 2
-	let sepratelable = [];
 	let sepratevalue = [];
-
-	for (let i = 0; i < serieslable.length; i += 2) {
-		sepratelable.push(serieslable.slice(i, i + 2));
+	for (let i = 0; i < seriesvalue.length; i += 2) {
 		sepratevalue.push(seriesvalue.slice(i, i + 2));
 	}
-	console.log("lable ne", sepratelable);
-	console.log("value ne", sepratevalue);
-
-	//Test dưới đây
-	let arr = [];
-
-	for (let i = 0; i < chartx.length; i++) {
-		let obj = {};
-		if (
-			chartx[i].name.includes("Physical") &&
-			chartx[i].name.includes("Used memory")
-		) {
-			obj["value"] = chartx[i].lastvalue;
-			obj["lable"] = "Used memory";
-			arr.push(obj);
-		}
-		if (
-			chartx[i].name.includes("Physical") &&
-			chartx[i].name.includes("Total memory")
-		) {
-			obj["value"] = chartx[i].lastvalue;
-			obj["lable"] = "Total memory";
-			arr.push(obj);
-		}
-	}
-	console.log("nhieu", arr);
-
-	let series = [];
-	if (chartx.length > 0) {
-		console.log("co");
-		series.push(
-			parseInt(parseFloat((arr[1].value / arr[0].value) * 100).toFixed(1))
-		);
-		series.push(
-			parseInt(
-				parseFloat(
-					((arr[0].value - arr[1].value) / arr[0].value) * 100
-				).toFixed(1)
-			)
-		);
-	} else {
-		series = [];
-		console.log("khong");
-	}
-	console.log("du lieu ne", series);
-	//----------------------------//
+	// console.log("value ne", sepratevalue);
 
 	return (
 		<div className={classes.root}>
@@ -321,7 +213,15 @@ export default function MainListItems(props) {
 						</Typography>
 					</Toolbar>
 				</AppBar>
-				<Chart series={series} />
+
+				{sepratevalue.map((item, index) => (
+					<Box display="flex" key={index}>
+						<Box>
+							<Chart series={item} title={arrtest[index].name} />
+						</Box>
+					</Box>
+				))}
+
 				{/* <List>
 					<ListItem button>
 						<ListItemText

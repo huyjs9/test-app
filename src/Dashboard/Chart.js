@@ -6,21 +6,26 @@ import axios from "axios";
 import Chart from "react-apexcharts";
 const useStyles = makeStyles((theme) => ({
 	root: {
+		display: "flex",
 		paddingTop: theme.spacing(1),
-		maxWidth: 300,
-		maxHeight: 300,
 	},
 }));
 export default function PieChart(props) {
-	const { series } = props;
+	const classes = useStyles();
+	const { series, title } = props;
+	console.log("title", title);
+
 	const options = {
-		series: [35, 65],
+		series: series,
 		options: {
 			chart: {
 				width: 380,
 				type: "pie",
 			},
 			labels: ["Used Memory", "Free Memory"],
+			title: {
+				text: title,
+			},
 			responsive: [
 				{
 					breakpoint: 480,
@@ -38,16 +43,14 @@ export default function PieChart(props) {
 		},
 	};
 	return (
-		<div className="app">
-			<div className="row">
-				<div className="mixed-chart">
-					<Chart
-						options={options.options}
-						series={options.series}
-						type="pie"
-						width="500"
-					/>
-				</div>
+		<div className={classes.root}>
+			<div className="mixed-chart">
+				<Chart
+					options={options.options}
+					series={options.series}
+					type="pie"
+					width="400"
+				/>
 			</div>
 		</div>
 	);
